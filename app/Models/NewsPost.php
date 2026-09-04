@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 
 #[Fillable([
     'slug', 'category', 'title_en', 'title_si', 'title_ta', 'excerpt_en', 'excerpt_si', 'excerpt_ta',
-    'body_en', 'body_si', 'body_ta', 'cover_image', 'author', 'tags', 'is_featured',
+    'body_en', 'body_si', 'body_ta', 'cover_image', 'document_path', 'author', 'tags', 'is_featured',
     'is_published', 'views', 'published_at',
 ])]
 class NewsPost extends Model

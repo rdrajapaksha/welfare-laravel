@@ -106,8 +106,8 @@
         <div class="mt-10 grid gap-5 lg:grid-cols-3">
             @foreach ($projects as $project)
                 <a href="{{ route('projects.show', $project) }}" class="card-surface card-interactive overflow-hidden">
-                    <img src="{{ asset(ltrim($project->cover_image ?? '/media/community-hall.svg', '/')) }}" alt="" class="h-40 w-full object-cover">
-                    <div class="p-5">
+                    <img src="{{ media_url($project->cover_image, '/media/community-hall.svg') }}" alt="" class="h-48 w-full object-cover">
+                    <div class="p-6">
                         <p class="text-xs font-bold uppercase text-teal-700">{{ $project->status }}</p>
                         <h3 class="mt-2 font-extrabold">{{ $project->translate('title') }}</h3>
                         <p class="mt-2 text-sm text-ink-600">{{ $project->translate('summary') }}</p>
@@ -177,10 +177,10 @@
             </div>
             <a href="{{ locale_url('/partners') }}" class="hidden text-sm font-bold text-brand-700 sm:inline">{{ $d['nav']['partners'] }}</a>
         </div>
-        <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div class="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             @foreach ($partners->take(4) as $partner)
-                <article class="card-surface flex items-center justify-center p-5">
-                    <img src="{{ asset(ltrim($partner->logo_url, '/')) }}" alt="{{ $partner->name }}" class="h-12 object-contain">
+                <article class="card-surface flex min-h-[8.5rem] items-center justify-center px-6 py-7">
+                    <img src="{{ media_url($partner->logo_url) }}" alt="{{ $partner->name }}" class="h-16 w-auto max-w-[10rem] object-contain">
                 </article>
             @endforeach
         </div>

@@ -11,7 +11,7 @@
                         <h2 class="text-xl font-extrabold">{{ $report->translate('title') }}</h2>
                         <p class="mt-2 text-sm text-ink-600">{{ $report->translate('summary') }}</p>
                     </div>
-                    <a href="{{ asset(ltrim($report->file_url, '/')) }}" class="btn btn-outline">{{ $d['transparency']['downloadReport'] }}</a>
+                    <a href="{{ media_url($report->file_url) }}" class="btn btn-outline" target="_blank" rel="noopener">{{ $d['transparency']['downloadReport'] }}</a>
                 </div>
                 <dl class="mt-4 grid gap-3 sm:grid-cols-3 text-sm">
                     <div>{{ $d['transparency']['income'] }}<br><strong>{{ lkr($report->total_income) }}</strong></div>

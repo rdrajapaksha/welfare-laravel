@@ -8,6 +8,8 @@
             @csrf
             <h2 class="text-xl font-extrabold">{{ $d['donations']['donateTitle'] }}</h2>
             @error('amount')<p class="text-sm text-brand-700">{{ $message }}</p>@enderror
+            @error('purpose')<p class="text-sm text-brand-700">{{ $message }}</p>@enderror
+            @error('project_id')<p class="text-sm text-brand-700">{{ $message }}</p>@enderror
             <label class="label">{{ $d['forms']['fullName'] }}</label>
             <input class="field" name="donor_name" required value="{{ old('donor_name') }}">
             <label class="label">{{ $d['forms']['email'] }}</label>
@@ -16,13 +18,31 @@
             <input class="field" name="phone" value="{{ old('phone') }}">
             <label class="label">{{ $d['donations']['amountLabel'] }}</label>
             <input class="field" type="number" name="amount" min="100" required value="{{ old('amount', 5000) }}">
-            <label class="label">{{ $d['donations']['purposeLabel'] }}</label>
-            <select class="field" name="purpose">
-                <option value="GENERAL">{{ $d['donations']['purposeGeneral'] }}</option>
-                <option value="EMERGENCY">{{ $d['donations']['purposeEmergency'] }}</option>
-                <option value="EDUCATION">{{ $d['donations']['purposeEducation'] }}</option>
-                <option value="MEDICAL">{{ $d['donations']['purposeMedical'] }}</option>
-            </select>
+            <fieldset class="space-y-3">
+                <legend class="label">{{ $d['donations']['purposeLabel'] }}</legend>
+                <div class="grid gap-2">
+                    @foreach ($fundPurposes as $value => $label)
+                        <label class="flex items-center gap-3 rounded-xl border border-ink-200 bg-white px-4 py-3 text-sm font-semibold text-ink-800">
+                            <input type="radio" name="destination" value="{{ $value }}" @checked($selectedDestination === $value)>
+                            <span>{{ $label }}</span>
+                        </label>
+                    @endforeach
+                </div>
+                @if ($projects->isNotEmpty())
+                    <p class="text-xs font-bold uppercase tracking-[0.14em] text-ink-500">{{ $d['nav']['communityProjects'] }}</p>
+                    <div class="grid gap-2">
+                        @foreach ($projects as $project)
+                            <label class="flex items-center gap-3 rounded-xl border border-ink-200 bg-white px-4 py-3">
+                                <input type="radio" name="destination" value="project:{{ $project->id }}" @checked($selectedDestination === 'project:'.$project->id)>
+                                <span class="min-w-0">
+                                    <span class="block truncate text-sm font-semibold text-ink-800">{{ $project->translate('title') }}</span>
+                                    <span class="block truncate text-xs text-ink-500">{{ $project->location }}</span>
+                                </span>
+                            </label>
+                        @endforeach
+                    </div>
+                @endif
+            </fieldset>
             <label class="label">{{ $d['donations']['methodTitle'] }}</label>
             <select class="field" name="method">
                 <option value="BANK_TRANSFER">{{ $d['donations']['methodBank'] }}</option>
@@ -43,6 +63,7 @@
                 <div class="flex justify-between gap-4"><dt>{{ $d['donations']['bankSwift'] }}</dt><dd class="font-semibold">{{ $site['bank']['swift'] }}</dd></div>
             </dl>
             <p class="mt-4 text-xs text-ink-500">{{ $d['donations']['bankNote'] }}</p>
+            @include('partials.donation-whatsapp-slip')
         </div>
     </div>
 </section>

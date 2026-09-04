@@ -463,16 +463,21 @@ class WelfareSeeder extends Seeder
     private function donations(Member $demo, array $members): void
     {
         $purposes = ['GENERAL', 'EMERGENCY', 'EDUCATION', 'MEDICAL', 'PROJECT'];
+        $projectIds = Project::query()->pluck('id');
 
         for ($i = 0; $i < 12; $i++) {
             $confirmed = $i % 4 !== 0;
+            $purpose = $purposes[$i % 5];
             Donation::query()->create([
                 'reference' => 'HLA-D-'.str_pad((string) (1000 + $i), 4, '0', STR_PAD_LEFT),
                 'donor_name' => $members[$i % count($members)]->full_name,
                 'email' => 'donor'.$i.'@example.lk',
                 'amount' => [2500, 5000, 10000, 25000][$i % 4],
                 'method' => 'BANK_TRANSFER',
-                'purpose' => $purposes[$i % 5],
+                'purpose' => $purpose,
+                'project_id' => $purpose === 'PROJECT' && $projectIds->isNotEmpty()
+                    ? $projectIds[$i % $projectIds->count()]
+                    : null,
                 'status' => $confirmed ? 'CONFIRMED' : 'PENDING',
                 'confirmed_at' => $confirmed ? now()->subDays(3 + $i) : null,
                 'member_id' => $i % 3 === 0 ? $demo->id : null,
@@ -566,7 +571,7 @@ class WelfareSeeder extends Seeder
 
         foreach ($items as $item) {
             $start = $item[1] >= 0 ? now()->addDays($item[1])->setTime(9, 0) : now()->subDays(abs($item[1]))->setTime(9, 0);
-            Event::query()->create([
+            $event = Event::query()->create([
                 'slug' => $item[0],
                 'venue' => $item[2],
                 'city' => $item[3],
@@ -581,6 +586,22 @@ class WelfareSeeder extends Seeder
                 ...$this->t('summary', $item[5], $item[6], $item[7]),
                 ...$this->t('body', '<p>'.$item[5].'</p>', '<p>'.$item[6].'</p>', '<p>'.$item[7].'</p>'),
             ]);
+
+            if (is_string($event->cover_image) && $event->cover_image !== '') {
+                $event->photos()->create([
+                    'path' => $event->cover_image,
+                    'sort_order' => 0,
+                ]);
+            }
+
+            if ($item[0] === 'mobile-medical-camp-kandy') {
+                foreach (['/media/eye-clinic.svg', '/media/health-awareness.svg', '/media/food-distribution.svg', '/media/blood-donation.svg'] as $index => $path) {
+                    $event->photos()->create([
+                        'path' => $path,
+                        'sort_order' => $index + 1,
+                    ]);
+                }
+            }
         }
     }
 

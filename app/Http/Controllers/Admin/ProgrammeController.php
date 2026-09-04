@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Programme;
+use App\Support\PhotoStore;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -25,6 +26,7 @@ class ProgrammeController extends Controller
             'summary_en' => ['required', 'string', 'max:2000'],
             'category' => ['required', 'in:WELFARE,EMERGENCY,MEMBER_SUPPORT'],
             'benefit_amount' => ['nullable', 'integer', 'min:0'],
+            'cover_image' => PhotoStore::imageRules(),
         ]);
 
         Programme::query()->create([
@@ -43,6 +45,7 @@ class ProgrammeController extends Controller
             'eligibility_si' => '',
             'eligibility_ta' => '',
             'benefit_amount' => $validated['benefit_amount'] ?: null,
+            'cover_image' => PhotoStore::store($request->file('cover_image'), 'programmes'),
             'is_active' => true,
             'sort_order' => Programme::query()->count(),
         ]);
@@ -57,6 +60,7 @@ class ProgrammeController extends Controller
             'summary_en' => ['required', 'string', 'max:2000'],
             'category' => ['required', 'in:WELFARE,EMERGENCY,MEMBER_SUPPORT'],
             'benefit_amount' => ['nullable', 'integer', 'min:0'],
+            'cover_image' => PhotoStore::imageRules(),
         ]);
 
         $programme->update([
@@ -68,6 +72,7 @@ class ProgrammeController extends Controller
             'summary_si' => $validated['summary_en'],
             'summary_ta' => $validated['summary_en'],
             'benefit_amount' => $validated['benefit_amount'] ?: null,
+            'cover_image' => PhotoStore::store($request->file('cover_image'), 'programmes', $programme->cover_image),
             'is_active' => $request->boolean('is_active'),
         ]);
 
@@ -76,6 +81,8 @@ class ProgrammeController extends Controller
 
     public function destroy(string $locale, Programme $programme): RedirectResponse
     {
+        PhotoStore::delete($programme->cover_image);
+        PhotoStore::delete($programme->document_path);
         $programme->delete();
 
         return back()->with('status', (string) d('common.success'));

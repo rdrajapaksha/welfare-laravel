@@ -96,6 +96,8 @@ Route::prefix('{locale}')
             Route::post('/events', [Admin\EventController::class, 'store'])->name('events.store');
             Route::put('/events/{event}', [Admin\EventController::class, 'update'])->name('events.update');
             Route::delete('/events/{event}', [Admin\EventController::class, 'destroy'])->name('events.destroy');
+            Route::post('/events/{event}/photos', [Admin\EventController::class, 'storePhoto'])->name('events.photos.store');
+            Route::delete('/events/{event}/photos/{photo}', [Admin\EventController::class, 'destroyPhoto'])->name('events.photos.destroy');
             Route::get('/news', [Admin\NewsController::class, 'index'])->name('news.index');
             Route::post('/news', [Admin\NewsController::class, 'store'])->name('news.store');
             Route::put('/news/{news}', [Admin\NewsController::class, 'update'])->name('news.update');
@@ -104,6 +106,8 @@ Route::prefix('{locale}')
             Route::post('/gallery', [Admin\GalleryController::class, 'store'])->name('gallery.store');
             Route::put('/gallery/{gallery}', [Admin\GalleryController::class, 'update'])->name('gallery.update');
             Route::delete('/gallery/{gallery}', [Admin\GalleryController::class, 'destroy'])->name('gallery.destroy');
+            Route::post('/gallery/{gallery}/items', [Admin\GalleryController::class, 'storeItem'])->name('gallery.items.store');
+            Route::delete('/gallery/{gallery}/items/{item}', [Admin\GalleryController::class, 'destroyItem'])->name('gallery.items.destroy');
             Route::get('/tickets', [Admin\TicketController::class, 'index'])->name('tickets.index');
             Route::get('/tickets/{ticket}', [Admin\TicketController::class, 'show'])->name('tickets.show');
             Route::post('/tickets/{ticket}/reply', [Admin\TicketController::class, 'reply'])->name('tickets.reply');
@@ -136,6 +140,8 @@ Route::prefix('{locale}')
             Route::post('/projects', [Admin\ProjectController::class, 'store'])->name('projects.store');
             Route::put('/projects/{project}', [Admin\ProjectController::class, 'update'])->name('projects.update');
             Route::delete('/projects/{project}', [Admin\ProjectController::class, 'destroy'])->name('projects.destroy');
+            Route::post('/projects/{project}/photos', [Admin\ProjectController::class, 'storePhoto'])->name('projects.photos.store');
+            Route::delete('/projects/{project}/photos/{photo}', [Admin\ProjectController::class, 'destroyPhoto'])->name('projects.photos.destroy');
             Route::get('/partners', [Admin\PartnerController::class, 'index'])->name('partners.index');
             Route::post('/partners', [Admin\PartnerController::class, 'store'])->name('partners.store');
             Route::put('/partners/{partner}', [Admin\PartnerController::class, 'update'])->name('partners.update');

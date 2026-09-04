@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 #[Fillable([
     'slug', 'category', 'title_en', 'title_si', 'title_ta', 'summary_en', 'summary_si', 'summary_ta',
-    'body_en', 'body_si', 'body_ta', 'icon', 'cover_image', 'benefit_amount',
+    'body_en', 'body_si', 'body_ta', 'icon', 'cover_image', 'document_path', 'benefit_amount',
     'eligibility_en', 'eligibility_si', 'eligibility_ta', 'is_active', 'sort_order',
 ])]
 class Programme extends Model

@@ -7,6 +7,31 @@ use Illuminate\Support\Facades\Storage;
 
 class PhotoStore
 {
+    /**
+     * @return list<string>
+     */
+    public static function imageRules(bool $required = false): array
+    {
+        return [$required ? 'required' : 'nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'];
+    }
+
+    /**
+     * @return list<string>
+     */
+    public static function pdfRules(bool $required = false): array
+    {
+        return [$required ? 'required' : 'nullable', 'file', 'mimes:pdf', 'max:10240'];
+    }
+
+    public static function kilobytes(?UploadedFile $file): int
+    {
+        if ($file === null) {
+            return 0;
+        }
+
+        return (int) ceil($file->getSize() / 1024);
+    }
+
     public static function store(?UploadedFile $file, string $directory, ?string $current = null): ?string
     {
         if ($file === null) {

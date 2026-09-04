@@ -18,7 +18,7 @@
     <div class="card-surface p-5">
         <h2 class="font-extrabold">{{ $d['admin']['chartDonationPurpose'] }}</h2>
         @foreach ($donationPurpose as $row)
-            <p class="mt-2 text-sm">{{ $row->purpose }} · {{ lkr((int) $row->total) }}</p>
+            <p class="mt-2 text-sm">{{ \App\Support\DonationPurpose::label((string) $row->purpose) }} · {{ lkr((int) $row->total) }}</p>
         @endforeach
     </div>
     <div class="card-surface p-5">

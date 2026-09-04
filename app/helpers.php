@@ -2,6 +2,8 @@
 
 use App\Support\Dictionary;
 use App\Support\PhotoStore;
+use App\Support\SiteContent;
+use App\Support\WhatsAppLink;
 
 if (! function_exists('d')) {
     /**
@@ -61,13 +63,49 @@ if (! function_exists('person_photo_url')) {
     }
 }
 
+if (! function_exists('media_url')) {
+    /**
+     * Public URL for a bundled /media path or an uploaded public-disk file.
+     */
+    function media_url(?string $path, ?string $fallback = null): string
+    {
+        $value = $path ?: $fallback;
+
+        if ($value === null || $value === '') {
+            return '';
+        }
+
+        $resolved = PhotoStore::url($value);
+
+        if ($resolved === null || $resolved === '') {
+            return '';
+        }
+
+        if (str_starts_with($resolved, 'http://') || str_starts_with($resolved, 'https://')) {
+            return $resolved;
+        }
+
+        return asset(ltrim($resolved, '/'));
+    }
+}
+
+if (! function_exists('whatsapp_url')) {
+    /**
+     * WhatsApp chat URL for the society hotline, with an optional prefilled message.
+     */
+    function whatsapp_url(?string $message = null): string
+    {
+        return WhatsAppLink::href($message);
+    }
+}
+
 if (! function_exists('site_copy')) {
     /**
      * Public copy with an optional SiteSetting override.
      */
     function site_copy(string $key): string
     {
-        return \App\Support\SiteContent::copy($key);
+        return SiteContent::copy($key);
     }
 }
 

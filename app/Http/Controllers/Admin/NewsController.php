@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\NewsPost;
+use App\Support\PhotoStore;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -25,17 +26,22 @@ class NewsController extends Controller
             'excerpt_en' => ['required', 'string'],
             'body_en' => ['required', 'string'],
             'category' => ['required', 'in:NEWS,ACTIVITY_REPORT,PRESS'],
+            'cover_image' => PhotoStore::imageRules(),
         ]);
 
         NewsPost::query()->create([
-            ...$validated,
             'slug' => Str::slug($validated['title_en']).'-'.Str::random(5),
+            'title_en' => $validated['title_en'],
             'title_si' => $validated['title_en'],
             'title_ta' => $validated['title_en'],
+            'excerpt_en' => $validated['excerpt_en'],
             'excerpt_si' => $validated['excerpt_en'],
             'excerpt_ta' => $validated['excerpt_en'],
+            'body_en' => $validated['body_en'],
             'body_si' => $validated['body_en'],
             'body_ta' => $validated['body_en'],
+            'category' => $validated['category'],
+            'cover_image' => PhotoStore::store($request->file('cover_image'), 'news'),
             'is_published' => true,
             'published_at' => now(),
         ]);
@@ -50,16 +56,21 @@ class NewsController extends Controller
             'excerpt_en' => ['required', 'string'],
             'body_en' => ['required', 'string'],
             'category' => ['required', 'in:NEWS,ACTIVITY_REPORT,PRESS'],
+            'cover_image' => PhotoStore::imageRules(),
         ]);
 
         $news->update([
-            ...$validated,
+            'title_en' => $validated['title_en'],
             'title_si' => $validated['title_en'],
             'title_ta' => $validated['title_en'],
+            'excerpt_en' => $validated['excerpt_en'],
             'excerpt_si' => $validated['excerpt_en'],
             'excerpt_ta' => $validated['excerpt_en'],
+            'body_en' => $validated['body_en'],
             'body_si' => $validated['body_en'],
             'body_ta' => $validated['body_en'],
+            'category' => $validated['category'],
+            'cover_image' => PhotoStore::store($request->file('cover_image'), 'news', $news->cover_image),
             'is_published' => $request->boolean('is_published'),
         ]);
 
@@ -68,6 +79,8 @@ class NewsController extends Controller
 
     public function destroy(string $locale, NewsPost $news): RedirectResponse
     {
+        PhotoStore::delete($news->cover_image);
+        PhotoStore::delete($news->document_path);
         $news->delete();
 
         return back()->with('status', (string) d('common.success'));

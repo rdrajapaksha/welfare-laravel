@@ -35,6 +35,8 @@ class EventController extends Controller
     {
         abort_unless($event->is_published, 404);
 
+        $event->load('photos');
+
         return view('site.events.show', ['event' => $event]);
     }
 

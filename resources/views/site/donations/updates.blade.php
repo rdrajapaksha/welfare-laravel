@@ -8,7 +8,7 @@
             <div class="card-surface flex items-center justify-between p-4">
                 <div>
                     <p class="font-bold">{{ $donation->is_anonymous ? $d['donations']['anonymousDonor'] : $donation->donor_name }}</p>
-                    <p class="text-xs text-ink-500">{{ $donation->purpose }} · {{ optional($donation->confirmed_at)->format('d M Y') }}</p>
+                    <p class="text-xs text-ink-500">{{ $donation->destinationLabel() }} · {{ optional($donation->confirmed_at)->format('d M Y') }}</p>
                 </div>
                 <p class="font-extrabold">{{ lkr($donation->amount) }}</p>
             </div>

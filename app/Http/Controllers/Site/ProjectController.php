@@ -17,7 +17,7 @@ class ProjectController extends Controller
 
     public function show(string $locale, Project $project): View
     {
-        $project->load('allocations');
+        $project->load(['allocations', 'photos']);
 
         return view('site.projects.show', ['project' => $project]);
     }

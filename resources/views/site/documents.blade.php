@@ -17,7 +17,7 @@
                             @if ($document->members_only && ! auth()->check())
                                 <span class="text-xs font-bold">{{ $d['documents']['membersOnly'] }}</span>
                             @else
-                                <a href="{{ asset(ltrim($document->file_url, '/')) }}" class="btn btn-outline">{{ $d['common']['download'] }}</a>
+                                <a href="{{ media_url($document->file_url) }}" class="btn btn-outline" target="_blank" rel="noopener">{{ $d['common']['download'] }}</a>
                             @endif
                         </div>
                     @endforeach

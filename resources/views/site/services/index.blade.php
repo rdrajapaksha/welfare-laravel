@@ -11,10 +11,15 @@
         </div>
         <div class="grid gap-5 md:grid-cols-2">
             @forelse ($programmes as $programme)
-                <a href="{{ route('services.show', $programme) }}" class="card-surface card-interactive p-6">
+                <a href="{{ route('services.show', $programme) }}" class="card-surface card-interactive overflow-hidden">
+                    @if ($programme->cover_image)
+                        <img src="{{ media_url($programme->cover_image) }}" alt="" class="h-48 w-full object-cover">
+                    @endif
+                    <div class="p-6">
                     <p class="text-xs font-bold uppercase text-brand-700">{{ $programme->category }}</p>
                     <h2 class="mt-2 text-xl font-extrabold">{{ $programme->translate('title') }}</h2>
                     <p class="mt-2 text-sm text-ink-600">{{ $programme->translate('summary') }}</p>
+                    </div>
                 </a>
             @empty
                 <p>{{ $d['services']['noProgrammes'] }}</p>

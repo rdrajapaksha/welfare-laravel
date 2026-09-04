@@ -5,6 +5,9 @@
 <section class="section-y">
     <div class="container-page grid gap-10 lg:grid-cols-3">
         <article class="lg:col-span-2 space-y-4 text-ink-700 leading-relaxed">
+            @if ($programme->cover_image)
+                <img src="{{ media_url($programme->cover_image) }}" alt="" class="w-full rounded-2xl object-cover">
+            @endif
             {!! $programme->translate('body') !!}
         </article>
         <aside class="space-y-4">

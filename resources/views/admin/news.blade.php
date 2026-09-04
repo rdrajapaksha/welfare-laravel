@@ -2,7 +2,7 @@
 @section('title', $d['admin']['news'])
 @section('content')
 <h1 class="text-3xl font-extrabold">{{ $d['admin']['news'] }}</h1>
-<form method="POST" action="{{ route('admin.news.store') }}" class="card-surface mt-6 max-w-xl space-y-3 p-5">
+<form method="POST" action="{{ route('admin.news.store') }}" enctype="multipart/form-data" class="card-surface mt-6 max-w-xl space-y-3 p-5">
     @csrf
     <input class="field" name="title_en" required placeholder="Title">
     <select class="field" name="category">
@@ -12,11 +12,12 @@
     </select>
     <textarea class="field" name="excerpt_en" rows="2" required placeholder="Excerpt"></textarea>
     <textarea class="field" name="body_en" rows="5" required placeholder="Body"></textarea>
+    @include('admin.partials.image-field', ['name' => 'cover_image'])
     <button class="btn btn-brand" type="submit">{{ $d['common']['save'] }}</button>
 </form>
 <div class="mt-8 space-y-4">
     @foreach ($posts as $post)
-        <form method="POST" action="{{ route('admin.news.update', $post) }}" class="card-surface space-y-3 p-5">
+        <form method="POST" action="{{ route('admin.news.update', $post) }}" enctype="multipart/form-data" class="card-surface space-y-3 p-5">
             @csrf
             @method('PUT')
             <input class="field" name="title_en" required value="{{ old('title_en', $post->title_en) }}">
@@ -27,6 +28,7 @@
             </select>
             <textarea class="field" name="excerpt_en" rows="2" required>{{ old('excerpt_en', $post->excerpt_en) }}</textarea>
             <textarea class="field" name="body_en" rows="5" required>{{ old('body_en', $post->body_en) }}</textarea>
+            @include('admin.partials.image-field', ['name' => 'cover_image', 'current' => $post->cover_image])
             <label class="flex items-center gap-2 text-sm font-semibold">
                 <input type="checkbox" name="is_published" value="1" @checked(old('is_published', $post->is_published))>
                 {{ $d['admin']['showPublic'] }}

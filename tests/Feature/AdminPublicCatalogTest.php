@@ -6,6 +6,8 @@ use App\Models\Member;
 use App\Models\NewsPost;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class AdminPublicCatalogTest extends TestCase
@@ -92,6 +94,7 @@ class AdminPublicCatalogTest extends TestCase
 
     public function test_admin_can_publish_an_annual_report_on_the_transparency_page(): void
     {
+        Storage::fake('public');
         $admin = User::factory()->admin()->create();
 
         $this->actingAs($admin)
@@ -99,7 +102,10 @@ class AdminPublicCatalogTest extends TestCase
                 'year' => 2019,
                 'title_en' => 'Annual report 2019',
                 'summary_en' => 'Audited accounts for the 2019 financial year.',
-                'file_url' => '/media/reports/annual-2019.pdf',
+                'file' => UploadedFile::fake()->createWithContent(
+                    'annual-2019.pdf',
+                    "%PDF-1.4\n1 0 obj\n<< /Type /Catalog >>\nendobj\ntrailer\n<< /Root 1 0 R >>\n%%EOF\n",
+                ),
                 'total_income' => 1250000,
                 'total_expenditure' => 980000,
                 'welfare_spend' => 720000,
@@ -109,6 +115,7 @@ class AdminPublicCatalogTest extends TestCase
 
         $this->get('/en/transparency')
             ->assertSee('Annual report 2019', false)
-            ->assertSee('Audited accounts for the 2019 financial year.', false);
+            ->assertSee('Audited accounts for the 2019 financial year.', false)
+            ->assertSee('Download report', false);
     }
 }

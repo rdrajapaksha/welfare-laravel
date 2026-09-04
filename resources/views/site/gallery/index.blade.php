@@ -5,8 +5,8 @@
 <section class="section-y">
     <div class="container-page grid gap-5 md:grid-cols-3">
         @foreach ($albums as $album)
-            <a href="{{ route('gallery.show', $album) }}" class="card-surface overflow-hidden">
-                <img src="{{ asset(ltrim($album->cover_image, '/')) }}" alt="" class="h-44 w-full object-cover">
+            <a href="{{ route('gallery.show', $album) }}" class="card-surface card-interactive overflow-hidden">
+                <img src="{{ media_url($album->cover_image) }}" alt="" class="h-48 w-full object-cover">
                 <div class="p-4">
                     <h2 class="font-extrabold">{{ $album->translate('title') }}</h2>
                     <p class="mt-1 text-xs text-ink-500">{{ $album->taken_at->format('Y') }} · {{ $album->items->count() }} {{ $d['common']['photos'] }}</p>

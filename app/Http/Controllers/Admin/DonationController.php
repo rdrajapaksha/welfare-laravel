@@ -12,7 +12,7 @@ class DonationController extends Controller
     public function index(): View
     {
         return view('admin.donations', [
-            'donations' => Donation::query()->latest()->paginate(20),
+            'donations' => Donation::query()->with('project')->latest()->paginate(20),
         ]);
     }
 
