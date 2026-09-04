@@ -47,7 +47,9 @@
     <div class="container-page flex items-center gap-2.5 py-2">
         <a href="{{ locale_url('/') }}" class="group flex min-w-0 flex-1 items-center gap-2.5">
             <span class="flex shrink-0 flex-col items-center gap-0.5">
-                <img src="{{ asset('logo.png') }}" alt="{{ $d['brand']['full'] }}" class="h-10 w-10 object-contain">
+                <span class="inline-flex animate-logo-spin">
+                    <img src="{{ asset('logo.png') }}" alt="{{ $d['brand']['full'] }}" class="h-10 w-10 object-contain">
+                </span>
                 <span class="max-w-[9.5rem] text-center font-times text-[0.7rem] leading-snug text-ink-800 italic">{{ $d['brand']['tagline'] }}</span>
             </span>
             <span class="min-w-0 text-[0.75rem] font-extrabold leading-snug tracking-tight text-ink-950 sm:text-[0.88rem] lg:text-[0.95rem]">{{ $d['brand']['full'] }}</span>

@@ -19,4 +19,10 @@ class AboutPageTest extends TestCase
             ->assertSee('To support people facing economic and social difficulties.', false)
             ->assertSee('To contribute towards building a healthier, happier and more compassionate society.', false);
     }
+
+    public function test_about_page_does_not_render_committee_shortcut_cards(): void
+    {
+        $this->get('/en/about')
+            ->assertDontSee('Meet the people who lead the society.', false);
+    }
 }

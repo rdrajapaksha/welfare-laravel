@@ -51,8 +51,6 @@ class Nav
                 'href' => '/members',
                 'children' => [
                     ['label' => $n['memberDirectory'], 'href' => '/members'],
-                    ['label' => $n['committee'], 'href' => '/about/committee'],
-                    ['label' => $n['advisory'], 'href' => '/about/advisory'],
                     ['label' => $n['join'], 'href' => '/join'],
                     ['label' => $n['volunteer'], 'href' => '/volunteer'],
                 ],
@@ -79,7 +77,6 @@ class Nav
                 'label' => $n['contact'],
                 'href' => '/contact',
                 'children' => [
-                    ['label' => $n['contact'], 'href' => '/contact'],
                     ['label' => $n['faq'], 'href' => '/faq'],
                     ['label' => $n['documents'], 'href' => '/documents'],
                 ],

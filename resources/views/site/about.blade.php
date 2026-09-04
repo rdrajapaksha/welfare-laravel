@@ -68,20 +68,4 @@
         </ol>
     </div>
 </section>
-<section class="section-y bg-ink-950 text-white">
-    <div class="container-page">
-        <p class="text-xs font-bold uppercase tracking-[0.16em] text-gold-300">{{ $d['nav']['committee'] }}</p>
-        <h2 class="mt-3 text-3xl font-extrabold">{{ $d['about']['meetCommittee'] }}</h2>
-        <div class="mt-8 grid gap-4 sm:grid-cols-2">
-            <a href="{{ locale_url('/about/committee') }}" class="rounded-2xl border border-white/15 bg-white/5 p-6 transition hover:border-gold-400/50 hover:bg-white/10">
-                <p class="text-xs font-bold uppercase tracking-[0.14em] text-gold-300">{{ $d['nav']['committee'] }}</p>
-                <p class="mt-3 text-xl font-extrabold">{{ $d['about']['committeeTitle'] }}</p>
-            </a>
-            <a href="{{ locale_url('/about/advisory') }}" class="rounded-2xl border border-white/15 bg-white/5 p-6 transition hover:border-gold-400/50 hover:bg-white/10">
-                <p class="text-xs font-bold uppercase tracking-[0.14em] text-gold-300">{{ $d['nav']['advisory'] }}</p>
-                <p class="mt-3 text-xl font-extrabold">{{ $d['about']['advisoryTitle'] }}</p>
-            </a>
-        </div>
-    </div>
-</section>
 @endsection

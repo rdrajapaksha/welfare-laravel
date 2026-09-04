@@ -22,6 +22,13 @@ class HomePageTest extends TestCase
             ->assertSee('076 818 5377', false);
     }
 
+    public function test_home_page_header_logo_spins(): void
+    {
+        $this->get('/en')
+            ->assertSee('animate-logo-spin', false)
+            ->assertSee('logo.png', false);
+    }
+
     public function test_home_page_does_not_render_executive_committee_cards(): void
     {
         CommitteeMember::factory()->create([
