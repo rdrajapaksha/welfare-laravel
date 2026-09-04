@@ -14,6 +14,7 @@
             </nav>
         @endisset
         <h1 class="mt-4 max-w-3xl text-4xl font-extrabold tracking-tight sm:text-5xl">{{ $title }}</h1>
+        <span class="mt-4 block h-1 w-16 rounded-full bg-gradient-to-r from-gold-400 to-brand-500"></span>
         @isset($subtitle)
             <p class="mt-4 max-w-2xl text-lg text-ink-300">{{ $subtitle }}</p>
         @endisset

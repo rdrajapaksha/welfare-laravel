@@ -122,6 +122,7 @@ Route::prefix('{locale}')
             Route::put('/content/identity', [Admin\ContentController::class, 'updateIdentity'])->name('content.identity');
             Route::post('/content/faqs', [Admin\ContentController::class, 'storeFaq'])->name('content.faqs');
             Route::delete('/content/faqs/{faq}', [Admin\ContentController::class, 'destroyFaq'])->name('content.faqs.destroy');
+            Route::get('/committee', [Admin\CommitteeMemberController::class, 'index'])->name('committee.index');
             Route::post('/committee', [Admin\CommitteeMemberController::class, 'store'])->name('committee.store');
             Route::put('/committee/{committeeMember}', [Admin\CommitteeMemberController::class, 'update'])->name('committee.update');
             Route::delete('/committee/{committeeMember}', [Admin\CommitteeMemberController::class, 'destroy'])->name('committee.destroy');

@@ -33,10 +33,21 @@ class PhotoStore
         }
 
         if (str_starts_with($path, '/')) {
-            return asset(ltrim($path, '/'));
+            return $path;
         }
 
         return Storage::disk('public')->url($path);
+    }
+
+    public static function delete(?string $path): void
+    {
+        if ($path === null || $path === '' || str_starts_with($path, '/') || str_starts_with($path, 'http://') || str_starts_with($path, 'https://')) {
+            return;
+        }
+
+        if (Storage::disk('public')->exists($path)) {
+            Storage::disk('public')->delete($path);
+        }
     }
 
     public static function initials(string $name): string

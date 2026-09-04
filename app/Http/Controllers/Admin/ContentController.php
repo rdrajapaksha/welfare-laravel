@@ -4,8 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateAboutContentRequest;
+use App\Http\Requests\UpdateHomeContentRequest;
+use App\Http\Requests\UpdateLegalContentRequest;
 use App\Http\Requests\UpdateSiteIdentityRequest;
-use App\Models\CommitteeMember;
 use App\Models\Faq;
 use App\Support\SiteContent;
 use Illuminate\Http\RedirectResponse;
@@ -19,9 +20,9 @@ class ContentController extends Controller
         return view('admin.content', [
             'faqs' => Faq::query()->orderBy('sort_order')->get(),
             'about' => SiteContent::aboutForm(),
+            'homeCopy' => SiteContent::homeForm(),
+            'legal' => SiteContent::legalForm(),
             'identity' => SiteContent::identity(),
-            'executive' => CommitteeMember::query()->executive()->orderBy('sort_order')->get(),
-            'advisory' => CommitteeMember::query()->advisory()->orderBy('sort_order')->get(),
         ]);
     }
 
@@ -53,6 +54,36 @@ class ContentController extends Controller
         return back()->with('status', (string) d('admin.aboutSaved'));
     }
 
+    public function updateHome(UpdateHomeContentRequest $request): RedirectResponse
+    {
+        $validated = $request->validated();
+
+        foreach (SiteContent::homeFields() as $field => $key) {
+            SiteContent::saveLocalized($key, 'home', [
+                'en' => $validated[$field.'_en'],
+                'si' => $validated[$field.'_si'],
+                'ta' => $validated[$field.'_ta'],
+            ]);
+        }
+
+        return back()->with('status', (string) d('admin.homeSaved'));
+    }
+
+    public function updateLegal(UpdateLegalContentRequest $request): RedirectResponse
+    {
+        $validated = $request->validated();
+
+        foreach (SiteContent::legalFields() as $field => $key) {
+            SiteContent::saveLocalized($key, 'legal', [
+                'en' => $validated[$field.'_en'],
+                'si' => $validated[$field.'_si'],
+                'ta' => $validated[$field.'_ta'],
+            ]);
+        }
+
+        return back()->with('status', (string) d('admin.legalSaved'));
+    }
+
     public function updateIdentity(UpdateSiteIdentityRequest $request): RedirectResponse
     {
         $validated = $request->validated();
@@ -70,6 +101,11 @@ class ContentController extends Controller
             'email' => $validated['email'],
             'phone' => self::toTel($validated['phone_display']),
             'hotline' => self::toTel($validated['hotline_display']),
+            'bank_name' => $validated['bank_name'],
+            'bank_branch' => $validated['branch'],
+            'bank_account_name' => $validated['account_name'],
+            'bank_account_no' => $validated['account_no'],
+            'bank_swift' => $validated['swift'] ?? '',
         ] as $key => $value) {
             SiteContent::saveIdentityValue($key, $value);
         }

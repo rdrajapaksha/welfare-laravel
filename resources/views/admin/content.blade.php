@@ -103,13 +103,13 @@
 </section>
 
 <section class="mt-12">
-    <h2 class="text-2xl font-extrabold">{{ $d['about']['committeeTitle'] }}</h2>
-    @include('admin.partials.board-form', ['board' => 'EXECUTIVE', 'members' => $executive])
-</section>
-
-<section class="mt-12">
-    <h2 class="text-2xl font-extrabold">{{ $d['about']['advisoryTitle'] }}</h2>
-    @include('admin.partials.board-form', ['board' => 'ADVISORY', 'members' => $advisory])
+    <div class="card-surface flex flex-col gap-4 p-6 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+            <h2 class="text-2xl font-extrabold">{{ $d['admin']['committeePage'] }}</h2>
+            <p class="mt-2 max-w-2xl text-sm text-ink-600">{{ $d['admin']['committeeHint'] }}</p>
+        </div>
+        <a href="{{ route('admin.committee.index') }}" class="btn btn-brand">{{ $d['admin']['manageOfficers'] }}</a>
+    </div>
 </section>
 
 <section class="mt-12">

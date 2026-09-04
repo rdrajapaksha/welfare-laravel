@@ -28,6 +28,11 @@ class UpdateSiteIdentityRequest extends FormRequest
             'phone_display' => ['required', 'string', 'max:40'],
             'hotline_display' => ['required', 'string', 'max:40'],
             'email' => ['required', 'email', 'max:255'],
+            'bank_name' => ['required', 'string', 'max:120'],
+            'branch' => ['required', 'string', 'max:120'],
+            'account_name' => ['required', 'string', 'max:255'],
+            'account_no' => ['required', 'string', 'max:80'],
+            'swift' => ['nullable', 'string', 'max:40'],
         ];
     }
 }

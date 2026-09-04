@@ -124,6 +124,10 @@
         background: linear-gradient(90deg, theme('colors.brand.600'), transparent 85%);
     }
 
+    .eyebrow {
+        @apply text-xs font-bold uppercase tracking-[0.14em] text-brand-700;
+    }
+
     .btn {
         @apply inline-flex h-11 items-center justify-center gap-1.5 rounded-full px-5 text-sm font-bold transition;
     }

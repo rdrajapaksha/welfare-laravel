@@ -195,6 +195,7 @@ class Nav
             ['label' => $admin['volunteers'], 'href' => '/admin/volunteers', 'icon' => 'heart'],
             ['label' => $admin['messages'], 'href' => '/admin/messages', 'icon' => 'mail'],
             ['label' => $admin['announcements'], 'href' => '/admin/announcements', 'icon' => 'megaphone'],
+            ['label' => $admin['committeePage'], 'href' => '/admin/committee', 'icon' => 'users'],
             ['label' => $admin['content'], 'href' => '/admin/content', 'icon' => 'settings'],
         ];
     }

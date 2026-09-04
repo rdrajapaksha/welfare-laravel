@@ -32,7 +32,7 @@
 
 <section class="section-y">
     <div class="container-page">
-        <p class="text-center text-xs font-bold uppercase tracking-[0.14em] text-brand-700">{{ $d['home']['statsTitle'] }}</p>
+        <p class="eyebrow text-center">{{ $d['home']['statsEyebrow'] }}</p>
         <h2 class="mt-3 text-center text-3xl font-extrabold">{{ $d['home']['statsTitle'] }}</h2>
         <p class="mt-3 text-center text-ink-600">{{ $d['home']['statsSubtitle'] }}</p>
         <div class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -65,9 +65,9 @@
                 @endforeach
             </div>
             <ul class="mt-6 space-y-2 text-sm text-ink-700">
-                <li>{{ $d['home']['aboutPoint1'] }}</li>
-                <li>{{ $d['home']['aboutPoint2'] }}</li>
-                <li>{{ $d['home']['aboutPoint3'] }}</li>
+                <li class="flex gap-2"><span class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-600"></span>{{ $d['home']['aboutPoint1'] }}</li>
+                <li class="flex gap-2"><span class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-600"></span>{{ $d['home']['aboutPoint2'] }}</li>
+                <li class="flex gap-2"><span class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-600"></span>{{ $d['home']['aboutPoint3'] }}</li>
             </ul>
             <a href="{{ locale_url('/about') }}" class="btn btn-ink mt-8">{{ $d['home']['aboutCta'] }}</a>
         </div>
@@ -125,7 +125,7 @@
             <h2 class="text-3xl font-extrabold">{{ $d['home']['newsTitle'] }}</h2>
             <div class="mt-6 space-y-4">
                 @foreach ($news as $post)
-                    <a href="{{ route('news.show', $post) }}" class="card-surface block p-5">
+                    <a href="{{ route('news.show', $post) }}" class="card-surface card-interactive block p-5">
                         <p class="text-xs text-ink-500">{{ optional($post->published_at)->format('d M Y') }}</p>
                         <h3 class="mt-1 font-extrabold">{{ $post->translate('title') }}</h3>
                         <p class="mt-1 text-sm text-ink-600">{{ $post->translate('excerpt') }}</p>
@@ -137,7 +137,7 @@
             <h2 class="text-3xl font-extrabold">{{ $d['home']['eventsTitle'] }}</h2>
             <div class="mt-6 space-y-4">
                 @forelse ($events as $event)
-                    <a href="{{ route('events.show', $event) }}" class="card-surface block p-5">
+                    <a href="{{ route('events.show', $event) }}" class="card-surface card-interactive block p-5">
                         <p class="text-xs text-ink-500">{{ $event->starts_at->format('d M Y · H:i') }}</p>
                         <h3 class="mt-1 font-extrabold">{{ $event->translate('title') }}</h3>
                         <p class="mt-1 text-sm text-ink-600">{{ $event->venue }}, {{ $event->city }}</p>
@@ -167,14 +167,36 @@
     </div>
 </section>
 
+@if ($partners->isNotEmpty())
 <section class="section-y">
-    <div class="container-page rounded-[2rem] bg-ink-950 px-8 py-14 text-white lg:px-16">
-        <h2 class="text-3xl font-extrabold">{{ $d['home']['ctaTitle'] }}</h2>
+    <div class="container-page">
+        <div class="flex items-end justify-between gap-4">
+            <div>
+                <p class="eyebrow">{{ $d['nav']['partners'] }}</p>
+                <h2 class="mt-3 text-3xl font-extrabold">{{ $d['partners']['title'] }}</h2>
+            </div>
+            <a href="{{ locale_url('/partners') }}" class="hidden text-sm font-bold text-brand-700 sm:inline">{{ $d['nav']['partners'] }}</a>
+        </div>
+        <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            @foreach ($partners->take(4) as $partner)
+                <article class="card-surface flex items-center justify-center p-5">
+                    <img src="{{ asset(ltrim($partner->logo_url, '/')) }}" alt="{{ $partner->name }}" class="h-12 object-contain">
+                </article>
+            @endforeach
+        </div>
+    </div>
+</section>
+@endif
+
+<section class="section-y">
+    <div class="container-page overflow-hidden rounded-[2rem] bg-ink-950 px-8 py-14 text-white lg:px-16">
+        <p class="text-xs font-bold uppercase tracking-[0.16em] text-gold-300">{{ $d['brand']['tagline'] }}</p>
+        <h2 class="mt-3 text-3xl font-extrabold">{{ $d['home']['ctaTitle'] }}</h2>
         <p class="mt-3 max-w-2xl text-ink-300">{{ $d['home']['ctaText'] }}</p>
         <div class="mt-8 flex flex-wrap gap-3">
             <a href="{{ locale_url('/donations') }}" class="btn btn-brand">{{ $d['home']['ctaDonate'] }}</a>
-            <a href="{{ locale_url('/join') }}" class="btn border border-white/30 text-white">{{ $d['home']['ctaJoin'] }}</a>
-            <a href="{{ locale_url('/volunteer') }}" class="btn border border-white/30 text-white">{{ $d['home']['ctaVolunteer'] }}</a>
+            <a href="{{ locale_url('/join') }}" class="btn border border-white/30 text-white hover:border-gold-300 hover:text-gold-200">{{ $d['home']['ctaJoin'] }}</a>
+            <a href="{{ locale_url('/volunteer') }}" class="btn border border-white/30 text-white hover:border-gold-300 hover:text-gold-200">{{ $d['home']['ctaVolunteer'] }}</a>
         </div>
     </div>
 </section>

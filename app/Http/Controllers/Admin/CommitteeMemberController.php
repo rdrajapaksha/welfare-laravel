@@ -8,9 +8,18 @@ use App\Http\Requests\StoreCommitteeMemberRequest;
 use App\Models\CommitteeMember;
 use App\Support\PhotoStore;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class CommitteeMemberController extends Controller
 {
+    public function index(): View
+    {
+        return view('admin.committee', [
+            'executive' => CommitteeMember::query()->executive()->orderBy('sort_order')->orderBy('id')->get(),
+            'advisory' => CommitteeMember::query()->advisory()->orderBy('sort_order')->orderBy('id')->get(),
+        ]);
+    }
+
     public function store(string $locale, StoreCommitteeMemberRequest $request): RedirectResponse
     {
         $validated = $request->validated();
@@ -18,16 +27,17 @@ class CommitteeMemberController extends Controller
 
         CommitteeMember::query()->create([
             ...$this->translatedFields($validated),
+            'email' => $validated['email'] ?? null,
             'phone' => $validated['phone'] ?? null,
             'term_from' => $validated['term_from'],
             'term_to' => $validated['term_to'] ?? null,
             'board' => $board,
             'is_current' => true,
-            'sort_order' => CommitteeMember::query()->where('board', $board)->count(),
+            'sort_order' => $validated['sort_order'] ?? CommitteeMember::query()->where('board', $board)->count(),
             'photo_url' => PhotoStore::store($request->file('photo'), 'committee'),
         ]);
 
-        return back()->with('status', (string) d('common.success'));
+        return redirect()->route('admin.committee.index')->with('status', (string) d('admin.officerSaved'));
     }
 
     public function update(string $locale, CommitteeMember $committeeMember, StoreCommitteeMemberRequest $request): RedirectResponse
@@ -36,22 +46,25 @@ class CommitteeMemberController extends Controller
 
         $committeeMember->update([
             ...$this->translatedFields($validated),
+            'email' => $validated['email'] ?? null,
             'phone' => $validated['phone'] ?? null,
             'term_from' => $validated['term_from'],
             'term_to' => $validated['term_to'] ?? null,
             'board' => CommitteeBoard::from($validated['board']),
             'is_current' => $request->boolean('is_current'),
+            'sort_order' => $validated['sort_order'] ?? $committeeMember->sort_order,
             'photo_url' => PhotoStore::store($request->file('photo'), 'committee', $committeeMember->photo_url),
         ]);
 
-        return back()->with('status', (string) d('common.success'));
+        return redirect()->route('admin.committee.index')->with('status', (string) d('admin.officerSaved'));
     }
 
     public function destroy(string $locale, CommitteeMember $committeeMember): RedirectResponse
     {
+        PhotoStore::delete($committeeMember->photo_url);
         $committeeMember->delete();
 
-        return back()->with('status', (string) d('common.success'));
+        return redirect()->route('admin.committee.index')->with('status', (string) d('admin.officerRemoved'));
     }
 
     /**

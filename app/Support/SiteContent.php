@@ -3,6 +3,7 @@
 namespace App\Support;
 
 use App\Models\SiteSetting;
+use Illuminate\Support\Arr;
 
 class SiteContent
 {
@@ -29,6 +30,19 @@ class SiteContent
                 $value = self::rowValue($rows->get($key));
                 if ($value !== null) {
                     $site['contact'][$key] = $value;
+                }
+            }
+
+            foreach ([
+                'bank_name' => 'bank_name',
+                'branch' => 'bank_branch',
+                'account_name' => 'bank_account_name',
+                'account_no' => 'bank_account_no',
+                'swift' => 'bank_swift',
+            ] as $bankKey => $settingKey) {
+                $value = self::rowValue($rows->get($settingKey));
+                if ($value !== null) {
+                    $site['bank'][$bankKey] = $value;
                 }
             }
 
@@ -93,6 +107,54 @@ class SiteContent
         ];
     }
 
+    public static function copy(string $key): string
+    {
+        return self::translated($key, self::dictionaryTriple($key));
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    public static function homeForm(): array
+    {
+        return self::localizedForm(self::homeFields());
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    public static function legalForm(): array
+    {
+        return self::localizedForm(self::legalFields());
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    public static function homeFields(): array
+    {
+        return [
+            'hero_eyebrow' => 'home.heroEyebrow',
+            'hero_title' => 'home.heroTitle',
+            'hero_accent' => 'home.heroTitleAccent',
+            'hero_subtitle' => 'home.heroSubtitle',
+            'cta_title' => 'home.ctaTitle',
+            'cta_text' => 'home.ctaText',
+            'footer_about' => 'footer.aboutText',
+        ];
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    public static function legalFields(): array
+    {
+        return [
+            'privacy' => 'legal.privacy',
+            'terms' => 'legal.terms',
+        ];
+    }
+
     /**
      * @param  array{en: string, si: string, ta: string}  $values
      */
@@ -120,6 +182,66 @@ class SiteContent
                 'group' => 'identity',
             ],
         );
+    }
+
+    /**
+     * @param  array<string, string>  $fields
+     * @return array<string, string>
+     */
+    private static function localizedForm(array $fields): array
+    {
+        $form = [];
+
+        foreach ($fields as $field => $key) {
+            $fallback = self::dictionaryTriple($key);
+
+            foreach (['en', 'si', 'ta'] as $locale) {
+                $form[$field.'_'.$locale] = self::raw($key, $locale, $fallback[$locale]);
+            }
+        }
+
+        return $form;
+    }
+
+    /**
+     * @return array{en: string, si: string, ta: string}
+     */
+    private static function dictionaryTriple(string $key): array
+    {
+        $hardcoded = self::hardcodedCopy($key);
+
+        return [
+            'en' => self::dictionaryValue('en', $key) ?: $hardcoded['en'],
+            'si' => self::dictionaryValue('si', $key) ?: $hardcoded['si'],
+            'ta' => self::dictionaryValue('ta', $key) ?: $hardcoded['ta'],
+        ];
+    }
+
+    private static function dictionaryValue(string $locale, string $key): string
+    {
+        $value = Arr::get(Dictionary::all($locale), $key);
+
+        return is_string($value) ? $value : '';
+    }
+
+    /**
+     * @return array{en: string, si: string, ta: string}
+     */
+    private static function hardcodedCopy(string $key): array
+    {
+        return match ($key) {
+            'legal.privacy' => [
+                'en' => 'Heart Link Allianze Welfare Society stores membership and donation records only for association administration, welfare claims and statutory reporting. We do not sell personal data.',
+                'si' => 'Heart Link Allianze Welfare Society stores membership and donation records only for association administration, welfare claims and statutory reporting. We do not sell personal data.',
+                'ta' => 'Heart Link Allianze Welfare Society stores membership and donation records only for association administration, welfare claims and statutory reporting. We do not sell personal data.',
+            ],
+            'legal.terms' => [
+                'en' => 'Use of this website is subject to the constitution of the association. Membership is granted only after committee admission. Donations are voluntary and receipted once confirmed.',
+                'si' => 'Use of this website is subject to the constitution of the association. Membership is granted only after committee admission. Donations are voluntary and receipted once confirmed.',
+                'ta' => 'Use of this website is subject to the constitution of the association. Membership is granted only after committee admission. Donations are voluntary and receipted once confirmed.',
+            ],
+            default => ['en' => '', 'si' => '', 'ta' => ''],
+        };
     }
 
     /**

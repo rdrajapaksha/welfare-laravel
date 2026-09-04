@@ -29,8 +29,10 @@ class StoreCommitteeMemberRequest extends FormRequest
             'bio_si' => ['nullable', 'string', 'max:2000'],
             'bio_ta' => ['nullable', 'string', 'max:2000'],
             'phone' => ['nullable', 'string', 'max:40'],
+            'email' => ['nullable', 'email', 'max:255'],
             'term_from' => ['required', 'integer', 'min:2000', 'max:2100'],
             'term_to' => ['nullable', 'integer', 'min:2000', 'max:2100'],
+            'sort_order' => ['nullable', 'integer', 'min:0', 'max:999'],
             'is_current' => ['sometimes', 'boolean'],
             'photo' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
         ];

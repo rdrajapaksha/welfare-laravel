@@ -17,11 +17,11 @@
 </section>
 <section id="vision" class="section-y bg-white">
     <div class="container-page grid gap-6 lg:grid-cols-2">
-        <article class="card-surface p-8">
+        <article class="card-surface border-l-4 border-gold-500 p-8">
             <h2 class="text-2xl font-extrabold">{{ $d['about']['visionTitle'] }}</h2>
             <p class="mt-4 text-lg leading-relaxed">{{ $vision }}</p>
         </article>
-        <article class="card-surface p-8">
+        <article class="card-surface border-l-4 border-brand-600 p-8">
             <h2 class="text-2xl font-extrabold">{{ $d['about']['missionTitle'] }}</h2>
             <p class="mt-4 text-lg leading-relaxed">{{ $mission }}</p>
         </article>
@@ -56,15 +56,32 @@
 <section id="history" class="section-y">
     <div class="container-page">
         <h2 class="text-3xl font-extrabold">{{ $d['about']['historyTitle'] }}</h2>
-        <ol class="relative mt-12 space-y-8 border-l border-brand-200 pl-8">
+        <ol class="relative mt-12 space-y-8 border-l-2 border-gold-300 pl-8">
             @foreach ($history as $item)
-                <li>
+                <li class="relative">
+                    <span class="absolute -left-[2.15rem] top-1.5 h-3 w-3 rounded-full border-2 border-white bg-brand-600 shadow-soft"></span>
                     <p class="text-xs font-bold uppercase text-brand-700">{{ $item['year'] }}</p>
                     <h3 class="mt-1 text-lg font-extrabold">{{ \App\Support\AboutContent::pick($item['title']) }}</h3>
                     <p class="mt-2 max-w-2xl text-sm text-ink-600">{{ \App\Support\AboutContent::pick($item['text']) }}</p>
                 </li>
             @endforeach
         </ol>
+    </div>
+</section>
+<section class="section-y bg-ink-950 text-white">
+    <div class="container-page">
+        <p class="text-xs font-bold uppercase tracking-[0.16em] text-gold-300">{{ $d['nav']['committee'] }}</p>
+        <h2 class="mt-3 text-3xl font-extrabold">{{ $d['about']['meetCommittee'] }}</h2>
+        <div class="mt-8 grid gap-4 sm:grid-cols-2">
+            <a href="{{ locale_url('/about/committee') }}" class="rounded-2xl border border-white/15 bg-white/5 p-6 transition hover:border-gold-400/50 hover:bg-white/10">
+                <p class="text-xs font-bold uppercase tracking-[0.14em] text-gold-300">{{ $d['nav']['committee'] }}</p>
+                <p class="mt-3 text-xl font-extrabold">{{ $d['about']['committeeTitle'] }}</p>
+            </a>
+            <a href="{{ locale_url('/about/advisory') }}" class="rounded-2xl border border-white/15 bg-white/5 p-6 transition hover:border-gold-400/50 hover:bg-white/10">
+                <p class="text-xs font-bold uppercase tracking-[0.14em] text-gold-300">{{ $d['nav']['advisory'] }}</p>
+                <p class="mt-3 text-xl font-extrabold">{{ $d['about']['advisoryTitle'] }}</p>
+            </a>
+        </div>
     </div>
 </section>
 @endsection

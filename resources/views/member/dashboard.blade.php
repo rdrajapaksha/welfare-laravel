@@ -2,6 +2,12 @@
 @section('title', $d['dashboard']['title'])
 @section('content')
 <h1 class="text-3xl font-extrabold">{{ $d['dashboard']['welcome'] }}{{ $member ? ', '.$member->full_name : '' }}</h1>
+@if ($member)
+    <div class="mt-4 flex items-center gap-4">
+        <x-person-photo :src="$member->photo_url" :name="$member->full_name" size="md" />
+        <p class="text-sm text-ink-500">{{ $member->membership_no }}</p>
+    </div>
+@endif
 @if ($member && $dueAmount > 0)
     <div class="mt-6 rounded-2xl border border-brand-200 bg-brand-50 p-4 text-brand-900">
         <p class="font-bold">{{ $d['fees']['arrearsTitle'] }}</p>

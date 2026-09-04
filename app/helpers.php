@@ -61,6 +61,16 @@ if (! function_exists('person_photo_url')) {
     }
 }
 
+if (! function_exists('site_copy')) {
+    /**
+     * Public copy with an optional SiteSetting override.
+     */
+    function site_copy(string $key): string
+    {
+        return \App\Support\SiteContent::copy($key);
+    }
+}
+
 if (! function_exists('switch_locale_url')) {
     /**
      * Swap the locale segment of the current request path.

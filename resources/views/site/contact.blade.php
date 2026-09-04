@@ -27,9 +27,9 @@
                 <p class="text-sm">{{ $site['contact']['locality'] }} {{ $site['contact']['postal_code'] }}</p>
                 <p class="text-sm">{{ $site['contact']['region'] }}, {{ $site['contact']['country_name'] }}</p>
                 <p class="mt-3 text-sm">{{ $site['registration_no'] }}</p>
-                <p class="text-sm">{{ $site['contact']['phone_display'] }}</p>
-                <p class="text-sm">{{ $d['contact']['hotline'] }}: {{ $site['contact']['hotline_display'] }}</p>
-                <p class="text-sm">{{ $site['contact']['email'] }}</p>
+                <p class="text-sm"><a href="tel:{{ $site['contact']['phone'] }}" class="font-semibold text-brand-700 hover:underline">{{ $site['contact']['phone_display'] }}</a></p>
+                <p class="text-sm">{{ $d['contact']['hotline'] }}: <a href="tel:{{ $site['contact']['hotline'] }}" class="font-semibold text-brand-700 hover:underline">{{ $site['contact']['hotline_display'] }}</a></p>
+                <p class="text-sm"><a href="mailto:{{ $site['contact']['email'] }}" class="hover:text-brand-700">{{ $site['contact']['email'] }}</a></p>
                 <p class="mt-2 text-sm text-ink-500">{{ $d['contact']['officeHoursValue'] }}</p>
             </div>
             <iframe title="{{ $d['contact']['mapTitle'] }}" src="{{ $site['contact']['map_embed'] }}" class="h-64 w-full rounded-2xl border-0"></iframe>

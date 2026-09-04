@@ -12,7 +12,7 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="bg-canvas font-sans text-ink-900" x-data="{ sidebarOpen: false }">
-        <div class="min-h-screen lg:grid lg:grid-cols-[16rem_1fr]">
+        <div class="min-h-screen lg:grid lg:grid-cols-[17rem_1fr]">
             <div class="flex items-center justify-between border-b border-ink-200 bg-white px-4 py-3 lg:hidden">
                 <a href="{{ locale_url('/') }}" class="flex items-center gap-2">
                     <img src="{{ asset('logo.png') }}" alt="" class="h-8 w-8">
@@ -24,22 +24,22 @@
             </div>
             <div x-show="sidebarOpen" x-cloak class="fixed inset-0 z-40 bg-ink-950/50 lg:hidden" @click="sidebarOpen = false"></div>
             <aside
-                class="fixed inset-y-0 left-0 z-50 flex w-72 flex-col border-r border-ink-200 bg-white p-4 transition-transform -translate-x-full lg:static lg:z-0 lg:w-auto lg:translate-x-0"
+                class="fixed inset-y-0 left-0 z-50 flex w-72 flex-col border-r border-ink-200 bg-white lg:static lg:z-0 lg:w-auto lg:translate-x-0"
                 :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'"
             >
-                <div class="flex items-center justify-between gap-2">
-                    <a href="{{ locale_url('/') }}" class="flex items-center gap-2">
-                        <img src="{{ asset('logo.png') }}" alt="" class="h-8 w-8">
-                        <span class="text-sm font-extrabold">{{ request()->routeIs('admin.*') ? $d['admin']['title'] : $d['dashboard']['title'] }}</span>
+                <div class="flex items-center justify-between gap-2 border-b border-ink-100 px-4 py-4">
+                    <a href="{{ locale_url('/') }}" class="flex min-w-0 items-center gap-2">
+                        <img src="{{ asset('logo.png') }}" alt="" class="h-8 w-8 shrink-0">
+                        <span class="truncate text-sm font-extrabold">{{ request()->routeIs('admin.*') ? $d['admin']['title'] : $d['dashboard']['title'] }}</span>
                     </a>
                     <button type="button" class="grid h-9 w-9 place-items-center rounded-full border lg:hidden" @click="sidebarOpen = false">×</button>
                 </div>
-                <nav class="mt-6 flex-1 space-y-1 overflow-y-auto">
+                <nav class="flex-1 space-y-1 overflow-y-auto p-3">
                     @foreach (request()->routeIs('admin.*') ? $adminNav : $memberNav as $link)
                         <a href="{{ locale_url($link['href']) }}" class="block rounded-xl px-3 py-2.5 text-sm font-semibold {{ request()->is('*/'.ltrim($link['href'], '/')) || request()->is('*/'.ltrim($link['href'], '/').'/*') ? 'bg-brand-50 text-brand-800' : 'text-ink-700 hover:bg-ink-50' }}">{{ $link['label'] }}</a>
                     @endforeach
                 </nav>
-                <form method="POST" action="{{ route('logout') }}" class="mt-6">
+                <form method="POST" action="{{ route('logout') }}" class="border-t border-ink-100 p-4">
                     @csrf
                     <button class="text-sm font-bold text-ink-500">{{ $d['nav']['logout'] }}</button>
                 </form>
@@ -50,6 +50,9 @@
                 @endif
                 @if (session('error'))
                     <div class="m-4 rounded-2xl bg-brand-50 px-4 py-3 text-sm text-brand-900">{{ session('error') }}</div>
+                @endif
+                @if ($errors->any())
+                    <div class="m-4 rounded-2xl bg-brand-50 px-4 py-3 text-sm text-brand-900">{{ $errors->first() }}</div>
                 @endif
                 <div class="p-4 sm:p-6 lg:p-10">
                     @yield('content')
