@@ -1,0 +1,122 @@
+<?php
+
+use App\Http\Controllers\Admin;
+use App\Http\Controllers\Member;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Site;
+use Illuminate\Support\Facades\Route;
+
+Route::get('/', function () {
+    return redirect('/'.config('hla.default_locale'));
+});
+
+Route::prefix('{locale}')
+    ->whereIn('locale', ['en', 'si', 'ta'])
+    ->middleware('locale')
+    ->group(function () {
+        Route::get('/', Site\HomeController::class)->name('home');
+        Route::get('/about', [Site\AboutController::class, 'index'])->name('about');
+        Route::get('/about/committee', [Site\AboutController::class, 'committee'])->name('about.committee');
+        Route::get('/services', [Site\ServiceController::class, 'index'])->name('services.index');
+        Route::get('/services/{programme}', [Site\ServiceController::class, 'show'])->name('services.show');
+        Route::get('/projects', [Site\ProjectController::class, 'index'])->name('projects.index');
+        Route::get('/projects/{project}', [Site\ProjectController::class, 'show'])->name('projects.show');
+        Route::get('/news', [Site\NewsController::class, 'index'])->name('news.index');
+        Route::get('/news/{news}', [Site\NewsController::class, 'show'])->name('news.show');
+        Route::get('/events', [Site\EventController::class, 'index'])->name('events.index');
+        Route::get('/events/{event}', [Site\EventController::class, 'show'])->name('events.show');
+        Route::post('/events/{event}/register', [Site\EventController::class, 'register'])->name('events.register');
+        Route::get('/gallery', [Site\GalleryController::class, 'index'])->name('gallery.index');
+        Route::get('/gallery/{gallery}', [Site\GalleryController::class, 'show'])->name('gallery.show');
+        Route::get('/donations', [Site\DonationController::class, 'index'])->name('donations.index');
+        Route::post('/donations', [Site\DonationController::class, 'store'])->middleware('throttle:8,1')->name('donations.store');
+        Route::get('/donations/thanks/{donation}', [Site\DonationController::class, 'thanks'])->name('donations.thanks');
+        Route::get('/donations/updates', [Site\DonationController::class, 'updates'])->name('donations.updates');
+        Route::get('/members', Site\MemberDirectoryController::class)->name('members.index');
+        Route::get('/join', [Site\JoinController::class, 'create'])->name('join.create');
+        Route::post('/join', [Site\JoinController::class, 'store'])->middleware('throttle:6,1')->name('join.store');
+        Route::get('/volunteer', [Site\VolunteerController::class, 'create'])->name('volunteer.create');
+        Route::post('/volunteer', [Site\VolunteerController::class, 'store'])->middleware('throttle:6,1')->name('volunteer.store');
+        Route::get('/contact', [Site\ContactController::class, 'create'])->name('contact.create');
+        Route::post('/contact', [Site\ContactController::class, 'store'])->middleware('throttle:8,1')->name('contact.store');
+        Route::get('/faq', Site\FaqController::class)->name('faq');
+        Route::get('/documents', Site\DocumentController::class)->name('documents');
+        Route::get('/partners', Site\PartnerController::class)->name('partners');
+        Route::get('/transparency', Site\TransparencyController::class)->name('transparency');
+        Route::get('/privacy', [Site\PageController::class, 'privacy'])->name('privacy');
+        Route::get('/terms', [Site\PageController::class, 'terms'])->name('terms');
+        Route::post('/newsletter', [Site\NewsletterController::class, 'store'])->middleware('throttle:8,1')->name('newsletter.store');
+
+        Route::get('/register', fn () => redirect()->route('join.create'))->name('register');
+
+        require __DIR__.'/auth.php';
+
+        Route::middleware(['auth', 'member'])->group(function () {
+            Route::get('/dashboard', [Member\DashboardController::class, 'index'])->name('dashboard');
+            Route::get('/dashboard/id', [Member\DigitalIdController::class, 'index'])->name('member.id');
+            Route::get('/dashboard/profile', [Member\ProfileController::class, 'edit'])->name('member.profile.edit');
+            Route::put('/dashboard/profile', [Member\ProfileController::class, 'update'])->name('member.profile.update');
+            Route::get('/dashboard/benefits', [Member\BenefitController::class, 'index'])->name('member.benefits');
+            Route::post('/dashboard/benefits', [Member\BenefitController::class, 'store'])->name('member.benefits.store');
+            Route::get('/dashboard/payments', [Member\PaymentController::class, 'index'])->name('member.payments');
+            Route::post('/dashboard/payments', [Member\PaymentController::class, 'store'])->name('member.payments.store');
+            Route::get('/dashboard/events', [Member\EventController::class, 'index'])->name('member.events');
+            Route::get('/dashboard/vote', [Member\VoteController::class, 'index'])->name('member.vote');
+            Route::post('/dashboard/vote/{election}', [Member\VoteController::class, 'store'])->name('member.vote.store');
+            Route::get('/dashboard/suggestions', [Member\SuggestionController::class, 'index'])->name('member.suggestions');
+            Route::post('/dashboard/suggestions', [Member\SuggestionController::class, 'store'])->name('member.suggestions.store');
+            Route::get('/dashboard/announcements', [Member\AnnouncementController::class, 'index'])->name('member.announcements');
+            Route::get('/dashboard/tickets', [Member\TicketController::class, 'index'])->name('member.tickets');
+            Route::post('/dashboard/tickets', [Member\TicketController::class, 'store'])->name('member.tickets.store');
+            Route::get('/dashboard/tickets/{ticket}', [Member\TicketController::class, 'show'])->name('member.tickets.show');
+            Route::post('/dashboard/tickets/{ticket}/reply', [Member\TicketController::class, 'reply'])->name('member.tickets.reply');
+            Route::get('/dashboard/documents', [Member\DocumentController::class, 'index'])->name('member.documents');
+            Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+            Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+            Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+        });
+
+        Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+            Route::get('/', [Admin\DashboardController::class, 'index'])->name('dashboard');
+            Route::get('/analytics', [Admin\AnalyticsController::class, 'index'])->name('analytics');
+            Route::get('/members', [Admin\MemberController::class, 'index'])->name('members.index');
+            Route::get('/members/{member}', [Admin\MemberController::class, 'show'])->name('members.show');
+            Route::put('/members/{member}', [Admin\MemberController::class, 'update'])->name('members.update');
+            Route::get('/applications', [Admin\ApplicationController::class, 'index'])->name('applications.index');
+            Route::post('/applications/{application}/admit', [Admin\ApplicationController::class, 'admit'])->name('applications.admit');
+            Route::post('/applications/{application}/reject', [Admin\ApplicationController::class, 'reject'])->name('applications.reject');
+            Route::get('/donations', [Admin\DonationController::class, 'index'])->name('donations.index');
+            Route::post('/donations/{donation}/confirm', [Admin\DonationController::class, 'confirm'])->name('donations.confirm');
+            Route::get('/fees', [Admin\FeeController::class, 'index'])->name('fees.index');
+            Route::post('/fees', [Admin\FeeController::class, 'store'])->name('fees.store');
+            Route::post('/fees/record', [Admin\FeeController::class, 'record'])->name('fees.record');
+            Route::post('/fees/{payment}/confirm', [Admin\FeeController::class, 'confirm'])->name('fees.confirm');
+            Route::get('/events', [Admin\EventController::class, 'index'])->name('events.index');
+            Route::post('/events', [Admin\EventController::class, 'store'])->name('events.store');
+            Route::delete('/events/{event}', [Admin\EventController::class, 'destroy'])->name('events.destroy');
+            Route::get('/news', [Admin\NewsController::class, 'index'])->name('news.index');
+            Route::post('/news', [Admin\NewsController::class, 'store'])->name('news.store');
+            Route::delete('/news/{news}', [Admin\NewsController::class, 'destroy'])->name('news.destroy');
+            Route::get('/gallery', [Admin\GalleryController::class, 'index'])->name('gallery.index');
+            Route::post('/gallery', [Admin\GalleryController::class, 'store'])->name('gallery.store');
+            Route::get('/tickets', [Admin\TicketController::class, 'index'])->name('tickets.index');
+            Route::get('/tickets/{ticket}', [Admin\TicketController::class, 'show'])->name('tickets.show');
+            Route::post('/tickets/{ticket}/reply', [Admin\TicketController::class, 'reply'])->name('tickets.reply');
+            Route::get('/volunteers', [Admin\VolunteerController::class, 'index'])->name('volunteers.index');
+            Route::put('/volunteers/{volunteer}', [Admin\VolunteerController::class, 'update'])->name('volunteers.update');
+            Route::get('/messages', [Admin\MessageController::class, 'index'])->name('messages.index');
+            Route::put('/messages/{message}', [Admin\MessageController::class, 'update'])->name('messages.update');
+            Route::get('/announcements', [Admin\AnnouncementController::class, 'index'])->name('announcements.index');
+            Route::post('/announcements', [Admin\AnnouncementController::class, 'store'])->name('announcements.store');
+            Route::delete('/announcements/{announcement}', [Admin\AnnouncementController::class, 'destroy'])->name('announcements.destroy');
+            Route::get('/elections', [Admin\ElectionController::class, 'index'])->name('elections.index');
+            Route::post('/elections', [Admin\ElectionController::class, 'store'])->name('elections.store');
+            Route::post('/elections/{election}/candidates', [Admin\ElectionController::class, 'addCandidate'])->name('elections.candidates');
+            Route::get('/elections/{election}/report', [Admin\ElectionController::class, 'report'])->name('elections.report');
+            Route::get('/suggestions', [Admin\SuggestionController::class, 'index'])->name('suggestions.index');
+            Route::put('/suggestions/{suggestion}', [Admin\SuggestionController::class, 'update'])->name('suggestions.update');
+            Route::get('/content', [Admin\ContentController::class, 'index'])->name('content.index');
+            Route::post('/content/faqs', [Admin\ContentController::class, 'storeFaq'])->name('content.faqs');
+            Route::delete('/content/faqs/{faq}', [Admin\ContentController::class, 'destroyFaq'])->name('content.faqs.destroy');
+        });
+    });

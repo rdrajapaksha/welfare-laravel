@@ -1,0 +1,53 @@
+@extends('layouts.site')
+@section('title', $d['about']['title'])
+@section('content')
+@include('partials.page-hero', ['title' => $d['about']['title'], 'subtitle' => $d['about']['subtitle'], 'crumbs' => [['label' => $d['nav']['home'], 'href' => '/'], ['label' => $d['about']['title']]]])
+<section class="section-y">
+    <div class="container-page grid items-center gap-12 lg:grid-cols-2">
+        <img src="{{ asset('media/about-team.svg') }}" alt="" class="rounded-3xl">
+        <div>
+            <h2 class="text-3xl font-extrabold">{{ $d['about']['introTitle'] }}</h2>
+            <p class="mt-4 text-ink-600">{{ $d['home']['aboutText'] }}</p>
+        </div>
+    </div>
+</section>
+<section id="vision" class="section-y bg-white">
+    <div class="container-page grid gap-6 lg:grid-cols-2">
+        <article class="card-surface p-8">
+            <h2 class="text-2xl font-extrabold">{{ $d['about']['visionTitle'] }}</h2>
+            <p class="mt-4 text-lg leading-relaxed">{{ \App\Support\AboutContent::pick($vision) }}</p>
+        </article>
+        <article class="card-surface p-8">
+            <h2 class="text-2xl font-extrabold">{{ $d['about']['missionTitle'] }}</h2>
+            <p class="mt-4 text-lg leading-relaxed">{{ \App\Support\AboutContent::pick($mission) }}</p>
+        </article>
+    </div>
+</section>
+<section class="section-y">
+    <div class="container-page">
+        <h2 class="text-3xl font-extrabold">{{ $d['about']['valuesTitle'] }}</h2>
+        <div class="mt-10 grid gap-5 sm:grid-cols-2">
+            @foreach ($values as $value)
+                <article class="card-surface p-6">
+                    <h3 class="text-xl font-extrabold">{{ \App\Support\AboutContent::pick($value['title']) }}</h3>
+                    <p class="mt-2 text-sm text-ink-600">{{ \App\Support\AboutContent::pick($value['text']) }}</p>
+                </article>
+            @endforeach
+        </div>
+    </div>
+</section>
+<section id="history" class="section-y bg-white">
+    <div class="container-page">
+        <h2 class="text-3xl font-extrabold">{{ $d['about']['historyTitle'] }}</h2>
+        <ol class="relative mt-12 space-y-8 border-l border-brand-200 pl-8">
+            @foreach ($history as $item)
+                <li>
+                    <p class="text-xs font-bold uppercase text-brand-700">{{ $item['year'] }}</p>
+                    <h3 class="mt-1 text-lg font-extrabold">{{ \App\Support\AboutContent::pick($item['title']) }}</h3>
+                    <p class="mt-2 max-w-2xl text-sm text-ink-600">{{ \App\Support\AboutContent::pick($item['text']) }}</p>
+                </li>
+            @endforeach
+        </ol>
+    </div>
+</section>
+@endsection
