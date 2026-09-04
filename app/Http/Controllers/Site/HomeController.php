@@ -11,6 +11,7 @@ use App\Models\NewsPost;
 use App\Models\Partner;
 use App\Models\Programme;
 use App\Models\Project;
+use App\Support\SiteContent;
 use Illuminate\View\View;
 
 class HomeController extends Controller
@@ -32,6 +33,7 @@ class HomeController extends Controller
             'report' => $report,
             'memberCount' => max(Member::query()->where('status', 'ACTIVE')->count(), (int) config('hla.impact.members')),
             'directPct' => 100 - $adminPct,
+            'introParagraphs' => SiteContent::introParagraphs(),
         ]);
     }
 }

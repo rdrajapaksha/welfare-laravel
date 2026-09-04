@@ -30,6 +30,7 @@ use App\Models\SupportTicket;
 use App\Models\TicketMessage;
 use App\Models\User;
 use App\Models\VolunteerApplication;
+use App\Support\AboutContent;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Carbon;
 
@@ -64,9 +65,9 @@ class WelfareSeeder extends Seeder
             'gender' => 'MALE',
             'civil_status' => 'MARRIED',
             'occupation' => 'Teacher',
-            'address_line1' => '42 Temple Road',
-            'city' => 'Nugegoda',
-            'district' => 'Colombo',
+            'address_line1' => '42 Mahulpotha',
+            'city' => 'Bandarawela',
+            'district' => 'Badulla',
             'phone' => '0771234501',
             'whatsapp' => '0771234501',
             'email' => 'member@heartlinkallianz.lk',
@@ -76,12 +77,13 @@ class WelfareSeeder extends Seeder
             'joined_at' => now()->subMonths(8),
             'emergency_name' => 'Sandya Perera',
             'emergency_phone' => '0771234599',
-            'bio' => 'Member since 2018. Volunteers at medical camps in Colombo district.',
+            'bio' => 'Member since 2018. Volunteers at medical camps in the Bandarawela area.',
             'show_in_directory' => true,
             'user_id' => $memberUser->id,
         ]);
 
         $this->committee();
+        $this->aboutSettings();
         $this->programmes();
         $projects = $this->projects();
         $this->partners();
@@ -134,33 +136,84 @@ class WelfareSeeder extends Seeder
     private function committee(): void
     {
         $rows = [
-            ['Nirmala Jayasuriya', 'President', 'සභාපතිනිය', 'தலைவர்', 'president@heartlinkallianz.lk'],
-            ['Ranjith Silva', 'Vice President', 'උප සභාපති', 'துணைத் தலைவர்', 'vicepresident@heartlinkallianz.lk'],
-            ['Thilini Dissanayake', 'Secretary', 'ලේකම්', 'செயலாளர்', 'secretary@heartlinkallianz.lk'],
-            ['Kumaran Selvarajah', 'Assistant Secretary', 'සහකාර ලේකම්', 'உதவிச் செயலாளர்', null],
-            ['Mohamed Rizwan', 'Treasurer', 'භාණ්ඩාගාරික', 'பொருளாளர்', 'treasurer@heartlinkallianz.lk'],
-            ['Malini Wickramasinghe', 'Assistant Treasurer', 'සහකාර භාණ්ඩාගාරික', 'உதவிப் பொருளாளர்', null],
-            ['Suresh Balasubramaniam', 'Organiser', 'සංවිධායක', 'ஒழுங்கமைப்பாளர்', null],
-            ['Chamari Gunasekara', 'Welfare Officer', 'සුබසාධක නිලධාරිනිය', 'நலன்புரி அலுவலர்', 'welfare@heartlinkallianz.lk'],
-            ['Ajith Rajapaksha', 'Committee Member', 'කමිටු සාමාජික', 'குழு உறுப்பினர்', null],
+            [
+                'H.M.C.P.K. Herath',
+                'Hon. President',
+                'ගරු සභාපති',
+                'கௌரவத் தலைவர்',
+                'No. 272, Kirimadugoda, Bandarawela.',
+                'නො. 272, කිරිමඩුගොඩ, බණ්ඩාරවෙල.',
+                'இல. 272, கிரிமடுகொட, பண்டாரவளை.',
+                '076 818 5377',
+                'EXECUTIVE',
+            ],
+            [
+                'A.M. Ajith Rupasinghe',
+                'Hon. Secretary',
+                'ගරු ලේකම්',
+                'கௌரவச் செயலாளர்',
+                '72/3, North Kovilwela, Bandarawela.',
+                '72/3, උතුරු කෝවිල්වෙල, බණ්ඩාරවෙල.',
+                '72/3, வடக்கு கோவில்வெல, பண்டாரவளை.',
+                '070 337 9955',
+                'EXECUTIVE',
+            ],
+            [
+                'M.S. Jayantha',
+                'Hon. Treasurer',
+                'ගරු භාණ්ඩාගාරික',
+                'கௌரவப் பொருளாளர்',
+                'No. 27, Galapitagedara, Bulathwela.',
+                'නො. 27, ගලපිටගෙදර, බුලත්වෙල.',
+                'இல. 27, கலபிட்டகெதர, புலத்வெல.',
+                '077 296 5300',
+                'EXECUTIVE',
+            ],
+            [
+                'I.P.P. Ratnayake',
+                'Patron (Divisional Secretary, Bandarawela)',
+                'අනුශාසක (ප්‍රාදේශීය ලේකම්, බණ්ඩාරවෙල)',
+                'ஆதரவாளர் (பிரிவுச் செயலாளர், பண்டாரவளை)',
+                'Divisional Secretariat, Bandarawela.',
+                'ප්‍රාදේශීය ලේකම් කාර්යාලය, බණ්ඩාරවෙල.',
+                'பிரிவுச் செயலகம், பண்டாரவளை.',
+                '071 443 5277',
+                'ADVISORY',
+            ],
         ];
 
         foreach ($rows as $i => $row) {
             CommitteeMember::query()->create([
                 'name' => $row[0],
                 ...$this->t('position', $row[1], $row[2], $row[3]),
-                ...$this->t(
-                    'bio',
-                    $row[0].' serves the current executive committee.',
-                    $row[0].' වර්තමාන විධායක කමිටුවේ සේවය කරයි.',
-                    $row[0].' தற்போதைய நிர்வாகக் குழுவில் பணிபுரிகிறார்.',
-                ),
-                'email' => $row[4],
+                ...$this->t('bio', $row[4], $row[5], $row[6]),
+                'phone' => $row[7],
+                'board' => $row[8],
                 'term_from' => 2024,
                 'term_to' => 2026,
                 'sort_order' => $i,
                 'is_current' => true,
             ]);
+        }
+    }
+
+    private function aboutSettings(): void
+    {
+        foreach ([
+            'about_vision' => AboutContent::vision(),
+            'about_mission' => AboutContent::mission(),
+            'about_intro' => AboutContent::intro(),
+            'about_objectives' => AboutContent::objectivesText(),
+        ] as $key => $values) {
+            SiteSetting::query()->updateOrCreate(
+                ['key' => $key],
+                [
+                    'value_en' => $values['en'],
+                    'value_si' => $values['si'],
+                    'value_ta' => $values['ta'],
+                    'group' => 'about',
+                ],
+            );
         }
     }
 
@@ -230,7 +283,7 @@ class WelfareSeeder extends Seeder
             ['Lanka Medicare', 'lanka-medicare', '/partners/lanka-medicare.svg', 'PLATINUM', 2020],
             ['Sunrise Pharma', 'sunrise-pharma', '/partners/sunrise-pharma.svg', 'GOLD', 2021],
             ['Metro Insurance', 'metro-insurance', '/partners/metro-insurance.svg', 'GOLD', 2018],
-            ['Divisional Secretariat Nugegoda', 'divisional-secretariat', '/partners/divisional-secretariat.svg', 'GOVERNMENT', 2016],
+            ['Divisional Secretariat Bandarawela', 'divisional-secretariat', '/partners/divisional-secretariat.svg', 'GOVERNMENT', 2016],
         ];
 
         foreach ($items as $i => $item) {
@@ -242,7 +295,7 @@ class WelfareSeeder extends Seeder
                 'tier' => $item[3],
                 'since' => $item[4],
                 'sort_order' => $i,
-                ...$this->t('description', $item[0].' supports Heart Link Allianz programmes.', $item[0].' හාට් ලින්ක් අලයන්ස් වැඩසටහන්වලට සහාය දෙයි.', $item[0].' ஹார்ட் லிங்க் அலையன்ஸ் திட்டங்களுக்கு ஆதரவளிக்கிறது.'),
+                ...$this->t('description', $item[0].' supports Heart Link Allianze programmes.', $item[0].' හදවතේ යාළුවෝ වැඩසටහන්වලට සහාය දෙයි.', $item[0].' ஹார்ட் லிங்க் அலையன்சே திட்டங்களுக்கு ஆதரவளிக்கிறது.'),
             ]);
         }
     }
@@ -254,7 +307,7 @@ class WelfareSeeder extends Seeder
             ['MEMBERSHIP', 'What are the membership fees?', 'සාමාජික ගාස්තු කීයද?', 'உறுப்பினர் கட்டணம் என்ன?', 'A one-time registration fee of Rs. 1,000, then Rs. 300 a month.'],
             ['DONATIONS', 'Can I donate without becoming a member?', 'සාමාජිකයෙකු නොවී පරිත්‍යාග කළ හැකිද?', 'உறுப்பினராகாமல் நன்கொடை அளிக்கலாமா?', 'Yes. Use the Donate Now form, make a bank transfer, or leave cash at the office against a receipt.'],
             ['WELFARE', 'How do I make a welfare claim?', 'සුබසාධක ඉල්ලීමක් කරන්නේ කෙසේද?', 'நலன் கோரிக்கையை எப்படிச் செய்வது?', 'Log in to the member dashboard and open a welfare claim, or download the claim form from the Document Center.'],
-            ['GENERAL', 'Where is the office and when is it open?', 'කාර්යාලය කොහේද, විවෘත වන්නේ කවදාද?', 'அலுவலகம் எங்கே, எப்போது திறந்திருக்கும்?', 'No. 142, Temple Road, Nugegoda. Monday to Friday 9.00 a.m. to 4.30 p.m., Saturday until noon.'],
+            ['GENERAL', 'Where is the office and when is it open?', 'කාර්යාලය කොහේද, විවෘත වන්නේ කවදාද?', 'அலுவலகம் எங்கே, எப்போது திறந்திருக்கும்?', 'No. 118, Bogahapelessa, Mahulpotha, Bandarawela. Monday to Friday 9.00 a.m. to 4.30 p.m., Saturday until noon.'],
         ];
 
         foreach ($items as $i => $item) {
@@ -325,7 +378,7 @@ class WelfareSeeder extends Seeder
     private function members(Member $demo): array
     {
         $names = [
-            ['Sanduni Fernando', 'Colombo', 'Nugegoda'],
+            ['Sanduni Fernando', 'Badulla', 'Bandarawela'],
             ['Arun Thillainathan', 'Jaffna', 'Nallur'],
             ['Fathima Rizwan', 'Colombo', 'Dehiwala'],
             ['Gayan Wijesuriya', 'Galle', 'Galle'],
@@ -346,7 +399,7 @@ class WelfareSeeder extends Seeder
                 'date_of_birth' => '1980-06-01',
                 'gender' => $i % 2 === 0 ? 'FEMALE' : 'MALE',
                 'occupation' => 'Professional',
-                'address_line1' => (20 + $i).' Temple Road',
+                'address_line1' => (20 + $i).' Mahulpotha Road',
                 'city' => $row[2],
                 'district' => $row[1],
                 'phone' => '077'.str_pad((string) (1234502 + $i), 7, '0', STR_PAD_LEFT),
@@ -500,9 +553,9 @@ class WelfareSeeder extends Seeder
     {
         $items = [
             ['mobile-medical-camp-kandy', 18, 'Peradeniya Maha Vidyalaya grounds', 'Kandy', '/media/medical-camp.svg', 'Mobile medical camp — Kandy', 'ජංගම වෛද්‍ය කඳවුර — මහනුවර', 'அலைமருத்துவ முகாம் — கண்டி'],
-            ['agm-2026', 25, 'HLA Association Hall', 'Nugegoda', '/media/general-meeting.svg', 'Annual General Meeting 2026', 'වාර්ෂික මහා සභාව 2026', 'வருடாந்த பொதுக் கூட்டம் 2026'],
-            ['volunteer-orientation-sep', 9, 'HLA Association Hall', 'Nugegoda', '/media/volunteer-training.svg', 'Volunteer orientation', 'ස්වේච්ඡා දිශානතිය', 'தொண்டர் அறிமுகம்'],
-            ['elders-day-2026', -40, 'HLA Association Hall', 'Nugegoda', '/media/elders-day.svg', "Elders' Day celebration", 'වැඩිහිටි දින උත්සවය', 'முதியோர் நாள் விழா'],
+            ['agm-2026', 25, 'HLA Association Hall', 'Bandarawela', '/media/general-meeting.svg', 'Annual General Meeting 2026', 'වාර්ෂික මහා සභාව 2026', 'வருடாந்த பொதுக் கூட்டம் 2026'],
+            ['volunteer-orientation-sep', 9, 'HLA Association Hall', 'Bandarawela', '/media/volunteer-training.svg', 'Volunteer orientation', 'ස්වේච්ඡා දිශානතිය', 'தொண்டர் அறிமுகம்'],
+            ['elders-day-2026', -40, 'HLA Association Hall', 'Bandarawela', '/media/elders-day.svg', "Elders' Day celebration", 'වැඩිහිටි දින උත්සවය', 'முதியோர் நாள் விழா'],
         ];
 
         foreach ($items as $item) {

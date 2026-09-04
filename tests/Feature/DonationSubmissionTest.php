@@ -12,7 +12,9 @@ class DonationSubmissionTest extends TestCase
 
     public function test_donation_page_renders(): void
     {
-        $this->get('/en/donations')->assertOk();
+        $this->get('/en/donations')
+            ->assertSee('Heart Link Allianze', false)
+            ->assertSee('Bandarawela Branch', false);
     }
 
     public function test_a_guest_can_submit_a_donation(): void

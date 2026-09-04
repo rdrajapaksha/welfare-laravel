@@ -7,7 +7,11 @@
         <img src="{{ asset('media/about-team.svg') }}" alt="" class="rounded-3xl">
         <div>
             <h2 class="text-3xl font-extrabold">{{ $d['about']['introTitle'] }}</h2>
-            <p class="mt-4 text-ink-600">{{ $d['home']['aboutText'] }}</p>
+            <div class="mt-4 space-y-4 text-ink-600">
+                @foreach ($introParagraphs as $paragraph)
+                    <p>{{ $paragraph }}</p>
+                @endforeach
+            </div>
         </div>
     </div>
 </section>
@@ -15,15 +19,28 @@
     <div class="container-page grid gap-6 lg:grid-cols-2">
         <article class="card-surface p-8">
             <h2 class="text-2xl font-extrabold">{{ $d['about']['visionTitle'] }}</h2>
-            <p class="mt-4 text-lg leading-relaxed">{{ \App\Support\AboutContent::pick($vision) }}</p>
+            <p class="mt-4 text-lg leading-relaxed">{{ $vision }}</p>
         </article>
         <article class="card-surface p-8">
             <h2 class="text-2xl font-extrabold">{{ $d['about']['missionTitle'] }}</h2>
-            <p class="mt-4 text-lg leading-relaxed">{{ \App\Support\AboutContent::pick($mission) }}</p>
+            <p class="mt-4 text-lg leading-relaxed">{{ $mission }}</p>
         </article>
     </div>
 </section>
-<section class="section-y">
+<section id="objectives" class="section-y">
+    <div class="container-page">
+        <h2 class="text-3xl font-extrabold">{{ $d['about']['objectivesTitle'] }}</h2>
+        <ol class="mt-8 grid gap-3 sm:grid-cols-2">
+            @foreach ($objectives as $objective)
+                <li class="card-surface flex gap-3 p-5 text-sm leading-relaxed text-ink-700">
+                    <span class="font-extrabold text-brand-700">{{ $loop->iteration }}.</span>
+                    <span>{{ $objective }}</span>
+                </li>
+            @endforeach
+        </ol>
+    </div>
+</section>
+<section class="section-y bg-white">
     <div class="container-page">
         <h2 class="text-3xl font-extrabold">{{ $d['about']['valuesTitle'] }}</h2>
         <div class="mt-10 grid gap-5 sm:grid-cols-2">
@@ -36,7 +53,7 @@
         </div>
     </div>
 </section>
-<section id="history" class="section-y bg-white">
+<section id="history" class="section-y">
     <div class="container-page">
         <h2 class="text-3xl font-extrabold">{{ $d['about']['historyTitle'] }}</h2>
         <ol class="relative mt-12 space-y-8 border-l border-brand-200 pl-8">

@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Support\Dictionary;
 use App\Support\Nav;
+use App\Support\SiteContent;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -36,7 +37,7 @@ class AppServiceProvider extends ServiceProvider
                 'footerNav' => Nav::footer($dictionary),
                 'memberNav' => Nav::member($dictionary),
                 'adminNav' => Nav::admin($dictionary),
-                'site' => config('hla'),
+                'site' => SiteContent::identity(),
             ]);
         });
     }

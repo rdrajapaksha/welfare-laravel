@@ -17,6 +17,7 @@ Route::prefix('{locale}')
         Route::get('/', Site\HomeController::class)->name('home');
         Route::get('/about', [Site\AboutController::class, 'index'])->name('about');
         Route::get('/about/committee', [Site\AboutController::class, 'committee'])->name('about.committee');
+        Route::get('/about/advisory', [Site\AboutController::class, 'advisory'])->name('about.advisory');
         Route::get('/services', [Site\ServiceController::class, 'index'])->name('services.index');
         Route::get('/services/{programme}', [Site\ServiceController::class, 'show'])->name('services.show');
         Route::get('/projects', [Site\ProjectController::class, 'index'])->name('projects.index');
@@ -116,7 +117,12 @@ Route::prefix('{locale}')
             Route::get('/suggestions', [Admin\SuggestionController::class, 'index'])->name('suggestions.index');
             Route::put('/suggestions/{suggestion}', [Admin\SuggestionController::class, 'update'])->name('suggestions.update');
             Route::get('/content', [Admin\ContentController::class, 'index'])->name('content.index');
+            Route::put('/content/about', [Admin\ContentController::class, 'updateAbout'])->name('content.about');
+            Route::put('/content/identity', [Admin\ContentController::class, 'updateIdentity'])->name('content.identity');
             Route::post('/content/faqs', [Admin\ContentController::class, 'storeFaq'])->name('content.faqs');
             Route::delete('/content/faqs/{faq}', [Admin\ContentController::class, 'destroyFaq'])->name('content.faqs.destroy');
+            Route::post('/committee', [Admin\CommitteeMemberController::class, 'store'])->name('committee.store');
+            Route::put('/committee/{committeeMember}', [Admin\CommitteeMemberController::class, 'update'])->name('committee.update');
+            Route::delete('/committee/{committeeMember}', [Admin\CommitteeMemberController::class, 'destroy'])->name('committee.destroy');
         });
     });

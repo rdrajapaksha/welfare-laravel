@@ -1,33 +1,33 @@
 <?php
 
 return [
-    'name' => 'Heart Link Allianz Welfare Society - Sri Lanka',
-    'short_name' => 'Heart Link Allianz',
-    'registration_no' => 'WA/2016/1187',
+    'name' => 'Heart Link Allianze Welfare Society',
+    'short_name' => 'Heart Link Allianze',
+    'registration_no' => 'BD/BW/SSW/01/149',
     'founded_year' => 2013,
     'locales' => ['en', 'si', 'ta'],
     'default_locale' => 'en',
 
     'contact' => [
-        'phone' => env('HLA_PHONE', '+94112345678'),
-        'phone_display' => '+94 11 234 5678',
-        'hotline' => env('HLA_HOTLINE', '+94771234567'),
-        'hotline_display' => '+94 77 123 4567',
+        'phone' => env('HLA_PHONE', '+94703379955'),
+        'phone_display' => '070 337 9955',
+        'hotline' => env('HLA_HOTLINE', '+94768185377'),
+        'hotline_display' => '076 818 5377',
         'email' => env('HLA_EMAIL', 'info@heartlinkallianz.lk'),
         'welfare_email' => 'welfare@heartlinkallianz.lk',
-        'street' => 'No. 142, Temple Road',
-        'locality' => 'Nugegoda',
-        'region' => 'Western Province',
-        'postal_code' => '10250',
+        'street' => 'No. 118, Bogahapelessa, Mahulpotha',
+        'locality' => 'Bandarawela',
+        'region' => 'Uva Province',
+        'postal_code' => '90100',
         'country_name' => 'Sri Lanka',
-        'map_embed' => 'https://www.google.com/maps?q=Nugegoda,+Sri+Lanka&output=embed',
-        'map_link' => 'https://www.google.com/maps/search/?api=1&query=Nugegoda+Sri+Lanka',
+        'map_embed' => 'https://www.google.com/maps?q=Bogahapelessa,+Mahulpotha,+Bandarawela,+Sri+Lanka&output=embed',
+        'map_link' => 'https://www.google.com/maps/search/?api=1&query=Bogahapelessa+Mahulpotha+Bandarawela+Sri+Lanka',
     ],
 
     'bank' => [
         'bank_name' => 'Bank of Ceylon',
-        'branch' => 'Nugegoda Branch',
-        'account_name' => 'Heart Link Allianz Welfare Society - Sri Lanka',
+        'branch' => 'Bandarawela Branch',
+        'account_name' => 'Heart Link Allianze Welfare Society',
         'account_no' => '0072 4451 8890',
         'swift' => 'BCEYLKLX',
     ],
@@ -46,10 +46,10 @@ return [
     ],
 
     'social' => [
-        ['key' => 'facebook', 'label' => 'Facebook', 'href' => 'https://facebook.com/heartlinkallianz'],
-        ['key' => 'instagram', 'label' => 'Instagram', 'href' => 'https://instagram.com/heartlinkallianz'],
-        ['key' => 'youtube', 'label' => 'YouTube', 'href' => 'https://youtube.com/@heartlinkallianz'],
-        ['key' => 'whatsapp', 'label' => 'WhatsApp', 'href' => 'https://wa.me/94771234567'],
+        ['key' => 'facebook', 'label' => 'Facebook', 'href' => 'https://facebook.com/heartlinkallianze'],
+        ['key' => 'instagram', 'label' => 'Instagram', 'href' => 'https://instagram.com/heartlinkallianze'],
+        ['key' => 'youtube', 'label' => 'YouTube', 'href' => 'https://youtube.com/@heartlinkallianze'],
+        ['key' => 'whatsapp', 'label' => 'WhatsApp', 'href' => 'https://wa.me/94768185377'],
     ],
 
     'locale_meta' => [

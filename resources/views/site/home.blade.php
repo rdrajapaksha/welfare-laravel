@@ -59,7 +59,11 @@
         <div>
             <p class="text-xs font-bold uppercase tracking-[0.14em] text-brand-700">{{ $d['home']['aboutEyebrow'] }}</p>
             <h2 class="mt-3 text-3xl font-extrabold">{{ $d['home']['aboutTitle'] }}</h2>
-            <p class="mt-4 text-ink-600">{{ $d['home']['aboutText'] }}</p>
+            <div class="mt-4 space-y-4 text-ink-600">
+                @foreach ($introParagraphs as $paragraph)
+                    <p>{{ $paragraph }}</p>
+                @endforeach
+            </div>
             <ul class="mt-6 space-y-2 text-sm text-ink-700">
                 <li>{{ $d['home']['aboutPoint1'] }}</li>
                 <li>{{ $d['home']['aboutPoint2'] }}</li>

@@ -23,8 +23,12 @@
         <div class="space-y-4">
             <div class="card-surface p-6">
                 <h2 class="font-extrabold">{{ $d['contact']['detailsTitle'] }}</h2>
-                <p class="mt-3 text-sm">{{ $site['contact']['street'] }}, {{ $site['contact']['locality'] }}</p>
+                <p class="mt-3 text-sm">{{ $site['contact']['street'] }}</p>
+                <p class="text-sm">{{ $site['contact']['locality'] }} {{ $site['contact']['postal_code'] }}</p>
+                <p class="text-sm">{{ $site['contact']['region'] }}, {{ $site['contact']['country_name'] }}</p>
+                <p class="mt-3 text-sm">{{ $site['registration_no'] }}</p>
                 <p class="text-sm">{{ $site['contact']['phone_display'] }}</p>
+                <p class="text-sm">{{ $d['contact']['hotline'] }}: {{ $site['contact']['hotline_display'] }}</p>
                 <p class="text-sm">{{ $site['contact']['email'] }}</p>
                 <p class="mt-2 text-sm text-ink-500">{{ $d['contact']['officeHoursValue'] }}</p>
             </div>

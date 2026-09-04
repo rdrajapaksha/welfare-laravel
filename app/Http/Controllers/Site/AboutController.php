@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Site;
 use App\Http\Controllers\Controller;
 use App\Models\CommitteeMember;
 use App\Support\AboutContent;
+use App\Support\SiteContent;
 use Illuminate\View\View;
 
 class AboutController extends Controller
@@ -12,8 +13,10 @@ class AboutController extends Controller
     public function index(): View
     {
         return view('site.about', [
-            'vision' => AboutContent::vision(),
-            'mission' => AboutContent::mission(),
+            'introParagraphs' => SiteContent::introParagraphs(),
+            'vision' => SiteContent::vision(),
+            'mission' => SiteContent::mission(),
+            'objectives' => SiteContent::objectives(),
             'values' => AboutContent::values(),
             'history' => AboutContent::history(),
         ]);
@@ -22,7 +25,18 @@ class AboutController extends Controller
     public function committee(): View
     {
         return view('site.committee', [
-            'members' => CommitteeMember::query()->where('is_current', true)->orderBy('sort_order')->get(),
+            'title' => d('about.committeeTitle'),
+            'subtitle' => d('about.committeeSubtitle'),
+            'members' => CommitteeMember::query()->current()->executive()->get(),
+        ]);
+    }
+
+    public function advisory(): View
+    {
+        return view('site.committee', [
+            'title' => d('about.advisoryTitle'),
+            'subtitle' => d('about.advisorySubtitle'),
+            'members' => CommitteeMember::query()->current()->advisory()->get(),
         ]);
     }
 }

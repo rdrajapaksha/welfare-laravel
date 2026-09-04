@@ -22,6 +22,7 @@ class Nav
                     ['label' => $n['visionMission'], 'href' => '/about#vision'],
                     ['label' => $n['history'], 'href' => '/about#history'],
                     ['label' => $n['committee'], 'href' => '/about/committee'],
+                    ['label' => $n['advisory'], 'href' => '/about/advisory'],
                     ['label' => $n['partners'], 'href' => '/partners'],
                 ],
             ],
@@ -51,6 +52,7 @@ class Nav
                 'children' => [
                     ['label' => $n['memberDirectory'], 'href' => '/members'],
                     ['label' => $n['committee'], 'href' => '/about/committee'],
+                    ['label' => $n['advisory'], 'href' => '/about/advisory'],
                     ['label' => $n['join'], 'href' => '/join'],
                     ['label' => $n['volunteer'], 'href' => '/volunteer'],
                 ],
@@ -100,6 +102,7 @@ class Nav
                 'links' => [
                     ['label' => $n['aboutAssociation'], 'href' => '/about'],
                     ['label' => $n['committee'], 'href' => '/about/committee'],
+                    ['label' => $n['advisory'], 'href' => '/about/advisory'],
                     ['label' => $n['news'], 'href' => '/news'],
                     ['label' => $n['upcomingEvents'], 'href' => '/events'],
                     ['label' => $n['gallery'], 'href' => '/gallery'],

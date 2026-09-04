@@ -11,7 +11,7 @@ class PageController extends Controller
     {
         return view('site.legal', [
             'title' => d('footer.privacy'),
-            'body' => 'Heart Link Allianz Welfare Society - Sri Lanka stores membership and donation records only for association administration, welfare claims and statutory reporting. We do not sell personal data.',
+            'body' => 'Heart Link Allianze Welfare Society stores membership and donation records only for association administration, welfare claims and statutory reporting. We do not sell personal data.',
         ]);
     }
 
