@@ -7,12 +7,12 @@
     <div class="mesh-brand pointer-events-none absolute inset-0"></div>
     <div class="container-page relative grid items-center gap-12 py-16 lg:grid-cols-12 lg:py-24">
         <div class="lg:col-span-6">
-            <p class="inline-flex items-center gap-2 rounded-full border border-brand-200 bg-white/80 px-3 py-1 text-xs font-bold uppercase tracking-[0.12em] text-brand-800">{{ $d['home']['heroEyebrow'] }}</p>
+            <p class="inline-flex items-center gap-2 rounded-full border border-brand-200 bg-white/80 px-3 py-1 text-xs font-bold uppercase tracking-[0.12em] text-brand-800">{{ site_copy('home.heroEyebrow') }}</p>
             <h1 class="mt-6 text-4xl font-extrabold tracking-tight sm:text-6xl lg:text-[4.1rem] lg:leading-[1.05]">
-                {{ $d['home']['heroTitle'] }}
-                <span class="text-gradient-brand accent-underline">{{ $d['home']['heroTitleAccent'] }}</span>
+                {{ site_copy('home.heroTitle') }}
+                <span class="text-gradient-brand accent-underline">{{ site_copy('home.heroTitleAccent') }}</span>
             </h1>
-            <p class="mt-6 max-w-xl text-lg leading-relaxed text-ink-600">{{ $d['home']['heroSubtitle'] }}</p>
+            <p class="mt-6 max-w-xl text-lg leading-relaxed text-ink-600">{{ site_copy('home.heroSubtitle') }}</p>
             <div class="mt-8 flex flex-wrap gap-3">
                 <a href="{{ locale_url('/donations') }}" class="btn btn-brand">{{ $d['home']['heroPrimaryCta'] }}</a>
                 <a href="{{ locale_url('/join') }}" class="btn btn-outline">{{ $d['home']['heroSecondaryCta'] }}</a>
@@ -191,8 +191,8 @@
 <section class="section-y">
     <div class="container-page overflow-hidden rounded-[2rem] bg-ink-950 px-8 py-14 text-white lg:px-16">
         <p class="text-xs font-bold uppercase tracking-[0.16em] text-gold-300">{{ $d['brand']['tagline'] }}</p>
-        <h2 class="mt-3 text-3xl font-extrabold">{{ $d['home']['ctaTitle'] }}</h2>
-        <p class="mt-3 max-w-2xl text-ink-300">{{ $d['home']['ctaText'] }}</p>
+        <h2 class="mt-3 text-3xl font-extrabold">{{ site_copy('home.ctaTitle') }}</h2>
+        <p class="mt-3 max-w-2xl text-ink-300">{{ site_copy('home.ctaText') }}</p>
         <div class="mt-8 flex flex-wrap gap-3">
             <a href="{{ locale_url('/donations') }}" class="btn btn-brand">{{ $d['home']['ctaDonate'] }}</a>
             <a href="{{ locale_url('/join') }}" class="btn border border-white/30 text-white hover:border-gold-300 hover:text-gold-200">{{ $d['home']['ctaJoin'] }}</a>

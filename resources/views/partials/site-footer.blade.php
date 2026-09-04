@@ -9,7 +9,7 @@
                     </span>
                     <span class="text-base font-extrabold text-white sm:text-lg">{{ $d['brand']['full'] }}</span>
                 </a>
-                <p class="mt-5 max-w-md text-sm leading-relaxed text-ink-300">{{ $d['footer']['aboutText'] }}</p>
+                <p class="mt-5 max-w-md text-sm leading-relaxed text-ink-300">{{ site_copy('footer.aboutText') }}</p>
                 <div class="mt-6 space-y-2.5 text-sm">
                     <p>{{ $site['contact']['street'] }}, {{ $site['contact']['locality'] }} {{ $site['contact']['postal_code'] }}, {{ $site['contact']['country_name'] }}</p>
                     <p><a href="tel:{{ $site['contact']['phone'] }}" class="hover:text-white">{{ $site['contact']['phone_display'] }}</a></p>

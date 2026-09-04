@@ -4,7 +4,59 @@
 <h1 class="text-3xl font-extrabold">{{ $d['admin']['content'] }}</h1>
 <p class="mt-2 max-w-2xl text-ink-600">{{ $d['admin']['contentHint'] }}</p>
 
-<section class="mt-10">
+<section class="mt-8">
+    <h2 class="text-2xl font-extrabold">{{ $d['admin']['pagesHub'] }}</h2>
+    <div class="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        @foreach ([
+            ['label' => $d['admin']['homeContent'], 'href' => '#home-copy'],
+            ['label' => $d['admin']['aboutContent'], 'href' => '#about-copy'],
+            ['label' => $d['admin']['identity'], 'href' => '#identity'],
+            ['label' => $d['admin']['committeePage'], 'href' => route('admin.committee.index')],
+            ['label' => $d['nav']['faq'], 'href' => '#faqs'],
+            ['label' => $d['admin']['legal'], 'href' => '#legal'],
+            ['label' => $d['admin']['news'], 'href' => route('admin.news.index')],
+            ['label' => $d['admin']['events'], 'href' => route('admin.events.index')],
+            ['label' => $d['admin']['gallery'], 'href' => route('admin.gallery.index')],
+            ['label' => $d['admin']['programmes'], 'href' => route('admin.programmes.index')],
+            ['label' => $d['admin']['projects'], 'href' => route('admin.projects.index')],
+            ['label' => $d['admin']['partnersPage'], 'href' => route('admin.partners.index')],
+            ['label' => $d['admin']['documents'], 'href' => route('admin.documents.index')],
+            ['label' => $d['admin']['reports'], 'href' => route('admin.reports.index')],
+        ] as $page)
+            <a href="{{ $page['href'] }}" class="card-surface card-interactive px-4 py-3 text-sm font-bold text-brand-800">{{ $page['label'] }}</a>
+        @endforeach
+    </div>
+</section>
+
+<section id="home-copy" class="mt-12">
+    <h2 class="text-2xl font-extrabold">{{ $d['admin']['homeContent'] }}</h2>
+    <p class="mt-2 max-w-2xl text-sm text-ink-600">{{ $d['admin']['homeHint'] }}</p>
+    <form method="POST" action="{{ route('admin.content.home') }}" class="card-surface mt-4 space-y-5 p-6">
+        @csrf
+        @method('PUT')
+        @foreach ([
+            ['hero_eyebrow', $d['admin']['heroEyebrow'], 2],
+            ['hero_title', $d['admin']['heroTitle'], 2],
+            ['hero_accent', $d['admin']['heroAccent'], 2],
+            ['hero_subtitle', $d['admin']['heroSubtitle'], 4],
+            ['cta_title', $d['admin']['ctaTitle'], 2],
+            ['cta_text', $d['admin']['ctaText'], 4],
+            ['footer_about', $d['admin']['footerAbout'], 4],
+        ] as [$field, $label, $rows])
+            <div class="grid gap-4 lg:grid-cols-3">
+                @foreach (['en' => 'EN', 'si' => 'සි', 'ta' => 'த'] as $code => $tag)
+                    <div>
+                        <label class="label">{{ $label }} ({{ $tag }})</label>
+                        <textarea class="field" name="{{ $field }}_{{ $code }}" rows="{{ $rows }}" required>{{ old($field.'_'.$code, $homeCopy[$field.'_'.$code]) }}</textarea>
+                    </div>
+                @endforeach
+            </div>
+        @endforeach
+        <button class="btn btn-brand" type="submit">{{ $d['common']['save'] }}</button>
+    </form>
+</section>
+
+<section id="about-copy" class="mt-12">
     <h2 class="text-2xl font-extrabold">{{ $d['admin']['aboutContent'] }}</h2>
     <form method="POST" action="{{ route('admin.content.about') }}" class="card-surface mt-4 space-y-5 p-6">
         @csrf
@@ -69,7 +121,7 @@
     </form>
 </section>
 
-<section class="mt-12">
+<section id="identity" class="mt-12">
     <h2 class="text-2xl font-extrabold">{{ $d['admin']['identity'] }}</h2>
     <form method="POST" action="{{ route('admin.content.identity') }}" class="card-surface mt-4 grid max-w-4xl gap-3 p-6 sm:grid-cols-2">
         @csrf
@@ -96,6 +148,27 @@
         <input class="field" name="email" type="email" required value="{{ old('email', $identity['contact']['email']) }}">
         <input class="field" name="phone_display" required value="{{ old('phone_display', $identity['contact']['phone_display']) }}" placeholder="{{ $d['contact']['telephone'] }}">
         <input class="field" name="hotline_display" required value="{{ old('hotline_display', $identity['contact']['hotline_display']) }}" placeholder="{{ $d['contact']['hotline'] }}">
+        <p class="sm:col-span-2 mt-2 text-sm font-extrabold">{{ $d['admin']['bankDetails'] }}</p>
+        <div>
+            <label class="label">{{ $d['donations']['bankName'] }}</label>
+            <input class="field" name="bank_name" required value="{{ old('bank_name', $identity['bank']['bank_name']) }}">
+        </div>
+        <div>
+            <label class="label">{{ $d['donations']['bankBranch'] }}</label>
+            <input class="field" name="branch" required value="{{ old('branch', $identity['bank']['branch']) }}">
+        </div>
+        <div class="sm:col-span-2">
+            <label class="label">{{ $d['donations']['bankAccountName'] }}</label>
+            <input class="field" name="account_name" required value="{{ old('account_name', $identity['bank']['account_name']) }}">
+        </div>
+        <div>
+            <label class="label">{{ $d['donations']['bankAccountNo'] }}</label>
+            <input class="field" name="account_no" required value="{{ old('account_no', $identity['bank']['account_no']) }}">
+        </div>
+        <div>
+            <label class="label">{{ $d['donations']['bankSwift'] }}</label>
+            <input class="field" name="swift" value="{{ old('swift', $identity['bank']['swift']) }}">
+        </div>
         <div class="sm:col-span-2">
             <button class="btn btn-brand" type="submit">{{ $d['common']['save'] }}</button>
         </div>
@@ -112,7 +185,29 @@
     </div>
 </section>
 
-<section class="mt-12">
+<section id="legal" class="mt-12">
+    <h2 class="text-2xl font-extrabold">{{ $d['admin']['legal'] }}</h2>
+    <form method="POST" action="{{ route('admin.content.legal') }}" class="card-surface mt-4 space-y-5 p-6">
+        @csrf
+        @method('PUT')
+        @foreach ([
+            ['privacy', $d['admin']['privacyPage']],
+            ['terms', $d['admin']['termsPage']],
+        ] as [$field, $label])
+            <div class="grid gap-4 lg:grid-cols-3">
+                @foreach (['en' => 'EN', 'si' => 'සි', 'ta' => 'த'] as $code => $tag)
+                    <div>
+                        <label class="label">{{ $label }} ({{ $tag }})</label>
+                        <textarea class="field" name="{{ $field }}_{{ $code }}" rows="8" required>{{ old($field.'_'.$code, $legal[$field.'_'.$code]) }}</textarea>
+                    </div>
+                @endforeach
+            </div>
+        @endforeach
+        <button class="btn btn-brand" type="submit">{{ $d['common']['save'] }}</button>
+    </form>
+</section>
+
+<section id="faqs" class="mt-12">
     <h2 class="text-2xl font-extrabold">{{ $d['nav']['faq'] }}</h2>
     <form method="POST" action="{{ route('admin.content.faqs') }}" class="card-surface mt-4 max-w-xl space-y-3 p-5">
         @csrf

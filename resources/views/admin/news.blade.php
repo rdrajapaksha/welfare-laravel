@@ -14,15 +14,30 @@
     <textarea class="field" name="body_en" rows="5" required placeholder="Body"></textarea>
     <button class="btn btn-brand" type="submit">{{ $d['common']['save'] }}</button>
 </form>
-<div class="mt-8 space-y-3">
+<div class="mt-8 space-y-4">
     @foreach ($posts as $post)
-        <div class="card-surface flex items-center justify-between gap-4 p-4">
-            <div>
-                <p class="font-bold">{{ $post->translate('title') }}</p>
-                <p class="text-sm text-ink-500">{{ $post->category }} · {{ $post->published_at?->format('d M Y') }}</p>
-            </div>
-            <form method="POST" action="{{ route('admin.news.destroy', $post) }}">@csrf @method('DELETE')<button class="text-sm font-bold text-brand-700" type="submit">{{ $d['common']['delete'] }}</button></form>
-        </div>
+        <form method="POST" action="{{ route('admin.news.update', $post) }}" class="card-surface space-y-3 p-5">
+            @csrf
+            @method('PUT')
+            <input class="field" name="title_en" required value="{{ old('title_en', $post->title_en) }}">
+            <select class="field" name="category">
+                @foreach (['NEWS', 'ACTIVITY_REPORT', 'PRESS'] as $category)
+                    <option value="{{ $category }}" @selected(old('category', $post->category) === $category)>{{ $category }}</option>
+                @endforeach
+            </select>
+            <textarea class="field" name="excerpt_en" rows="2" required>{{ old('excerpt_en', $post->excerpt_en) }}</textarea>
+            <textarea class="field" name="body_en" rows="5" required>{{ old('body_en', $post->body_en) }}</textarea>
+            <label class="flex items-center gap-2 text-sm font-semibold">
+                <input type="checkbox" name="is_published" value="1" @checked(old('is_published', $post->is_published))>
+                {{ $d['admin']['showPublic'] }}
+            </label>
+            <button class="btn btn-brand" type="submit">{{ $d['common']['save'] }}</button>
+        </form>
+        <form method="POST" action="{{ route('admin.news.destroy', $post) }}" class="-mt-2">
+            @csrf
+            @method('DELETE')
+            <button class="text-sm font-bold text-brand-700" type="submit">{{ $d['common']['delete'] }}</button>
+        </form>
     @endforeach
 </div>
 <div class="mt-6">{{ $posts->links() }}</div>

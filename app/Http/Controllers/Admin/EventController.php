@@ -45,6 +45,28 @@ class EventController extends Controller
         return back()->with('status', (string) d('common.success'));
     }
 
+    public function update(string $locale, Event $event, Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'title_en' => ['required', 'string', 'max:255'],
+            'summary_en' => ['required', 'string'],
+            'venue' => ['required', 'string', 'max:255'],
+            'city' => ['required', 'string', 'max:120'],
+            'starts_at' => ['required', 'date'],
+        ]);
+
+        $event->update([
+            ...$validated,
+            'title_si' => $validated['title_en'],
+            'title_ta' => $validated['title_en'],
+            'summary_si' => $validated['summary_en'],
+            'summary_ta' => $validated['summary_en'],
+            'is_published' => $request->boolean('is_published'),
+        ]);
+
+        return back()->with('status', (string) d('common.success'));
+    }
+
     public function destroy(string $locale, Event $event): RedirectResponse
     {
         $event->delete();

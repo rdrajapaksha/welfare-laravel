@@ -37,4 +37,29 @@ class GalleryController extends Controller
 
         return back()->with('status', (string) d('common.success'));
     }
+
+    public function update(string $locale, GalleryAlbum $gallery, Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'title_en' => ['required', 'string', 'max:255'],
+            'cover_image' => ['required', 'string', 'max:255'],
+            'category' => ['required', 'in:EVENT,COMMUNITY,HIGHLIGHT'],
+        ]);
+
+        $gallery->update([
+            ...$validated,
+            'title_si' => $validated['title_en'],
+            'title_ta' => $validated['title_en'],
+            'is_published' => $request->boolean('is_published'),
+        ]);
+
+        return back()->with('status', (string) d('common.success'));
+    }
+
+    public function destroy(string $locale, GalleryAlbum $gallery): RedirectResponse
+    {
+        $gallery->delete();
+
+        return back()->with('status', (string) d('common.success'));
+    }
 }

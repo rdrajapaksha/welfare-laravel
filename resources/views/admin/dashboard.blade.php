@@ -10,7 +10,15 @@
     <div class="card-surface p-5"><p class="text-xs font-bold uppercase text-ink-400">{{ $d['admin']['kpiUpcomingEvents'] }}</p><p class="mt-2 text-3xl font-extrabold">{{ $upcomingEvents }}</p></div>
     <div class="card-surface p-5"><p class="text-xs font-bold uppercase text-ink-400">{{ $d['admin']['kpiVolunteers'] }}</p><p class="mt-2 text-3xl font-extrabold">{{ $volunteers }}</p></div>
 </div>
-<div class="mt-8">
+<div class="mt-8 grid gap-4 lg:grid-cols-2">
+    <a href="{{ route('admin.content.index') }}" class="card-surface card-interactive flex items-center justify-between gap-4 p-5">
+        <div>
+            <p class="text-xs font-bold uppercase tracking-[0.14em] text-brand-700">{{ $d['admin']['content'] }}</p>
+            <p class="mt-1 font-extrabold">{{ $d['admin']['websitePages'] }}</p>
+            <p class="mt-1 text-sm text-ink-500">{{ $d['admin']['contentHint'] }}</p>
+        </div>
+        <span class="btn btn-brand">{{ $d['admin']['content'] }}</span>
+    </a>
     <a href="{{ route('admin.committee.index') }}" class="card-surface card-interactive flex items-center justify-between gap-4 p-5">
         <div>
             <p class="text-xs font-bold uppercase tracking-[0.14em] text-brand-700">{{ $d['admin']['committeePage'] }}</p>

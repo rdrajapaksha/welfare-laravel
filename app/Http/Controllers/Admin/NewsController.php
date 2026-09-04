@@ -43,6 +43,29 @@ class NewsController extends Controller
         return back()->with('status', (string) d('common.success'));
     }
 
+    public function update(string $locale, NewsPost $news, Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'title_en' => ['required', 'string', 'max:255'],
+            'excerpt_en' => ['required', 'string'],
+            'body_en' => ['required', 'string'],
+            'category' => ['required', 'in:NEWS,ACTIVITY_REPORT,PRESS'],
+        ]);
+
+        $news->update([
+            ...$validated,
+            'title_si' => $validated['title_en'],
+            'title_ta' => $validated['title_en'],
+            'excerpt_si' => $validated['excerpt_en'],
+            'excerpt_ta' => $validated['excerpt_en'],
+            'body_si' => $validated['body_en'],
+            'body_ta' => $validated['body_en'],
+            'is_published' => $request->boolean('is_published'),
+        ]);
+
+        return back()->with('status', (string) d('common.success'));
+    }
+
     public function destroy(string $locale, NewsPost $news): RedirectResponse
     {
         $news->delete();
