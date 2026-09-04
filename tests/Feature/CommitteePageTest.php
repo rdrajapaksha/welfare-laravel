@@ -17,6 +17,7 @@ class CommitteePageTest extends TestCase
             'name' => 'H.M.C.P.K. Herath',
             'position_en' => 'Hon. President',
             'phone' => '076 818 5377',
+            'photo_url' => '/media/officers/president.svg',
             'sort_order' => 0,
             'is_current' => true,
             'board' => CommitteeBoard::Executive,
@@ -46,6 +47,7 @@ class CommitteePageTest extends TestCase
             ->assertSee('H.M.C.P.K. Herath', false)
             ->assertSee('Hon. President', false)
             ->assertSee('076 818 5377', false)
+            ->assertSee('/media/officers/president.svg', false)
             ->assertSee('A.M. Ajith Rupasinghe', false)
             ->assertSee('070 337 9955', false)
             ->assertDontSee('Hidden Past Member', false)

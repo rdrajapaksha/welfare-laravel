@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Election;
 use App\Support\Dictionary;
 use App\Support\Nav;
 use App\Support\SiteContent;
@@ -29,15 +30,17 @@ class AppServiceProvider extends ServiceProvider
             }
 
             $dictionary = Dictionary::all();
+            $hasOpenElection = Election::open()->exists();
 
             $view->with([
                 'd' => $dictionary,
                 'locale' => app()->getLocale(),
                 'siteNav' => Nav::main($dictionary),
                 'footerNav' => Nav::footer($dictionary),
-                'memberNav' => Nav::member($dictionary),
+                'memberNav' => Nav::member($dictionary, $hasOpenElection),
                 'adminNav' => Nav::admin($dictionary),
                 'site' => SiteContent::identity(),
+                'hasOpenElection' => $hasOpenElection,
             ]);
         });
     }

@@ -38,6 +38,17 @@ class ElectionController extends Controller
         return back()->with('status', (string) d('common.success'));
     }
 
+    public function update(string $locale, Request $request, Election $election): RedirectResponse
+    {
+        $validated = $request->validate([
+            'status' => ['required', 'in:DRAFT,OPEN,CLOSED'],
+        ]);
+
+        $election->update($validated);
+
+        return back()->with('status', (string) d('common.success'));
+    }
+
     public function addCandidate(string $locale, Request $request, Election $election): RedirectResponse
     {
         $validated = $request->validate([

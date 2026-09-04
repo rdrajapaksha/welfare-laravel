@@ -28,7 +28,7 @@ class VoteController extends Controller
     {
         $member = $request->user()->member;
         abort_if($member === null, 403);
-        abort_unless($election->status === 'OPEN', 403);
+        abort_unless($election->isOpen(), 403);
 
         if ($member->votes()->where('election_id', $election->id)->exists()) {
             return back()->with('error', (string) d('dashboard.alreadyVoted'));

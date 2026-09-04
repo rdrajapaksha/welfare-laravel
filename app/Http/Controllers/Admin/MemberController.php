@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UpdateAdminMemberRequest;
 use App\Models\Member;
 use App\Support\MembershipDues;
+use App\Support\PhotoStore;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -45,17 +47,20 @@ class MemberController extends Controller
         ]);
     }
 
-    public function update(string $locale, Request $request, Member $member): RedirectResponse
+    public function update(string $locale, UpdateAdminMemberRequest $request, Member $member): RedirectResponse
     {
-        $validated = $request->validate([
-            'status' => ['required', 'in:ACTIVE,PENDING,SUSPENDED,RESIGNED'],
-            'membership_type' => ['required', 'in:ORDINARY,HONORARY,JUNIOR'],
+        $validated = $request->safe()->except(['photo']);
+
+        $member->update([
+            ...$validated,
+            'photo_url' => PhotoStore::store($request->file('photo'), 'members', $member->photo_url),
         ]);
 
-        $member->update($validated);
-
         if ($member->user) {
-            $member->user->update(['is_active' => $validated['status'] === 'ACTIVE']);
+            $member->user->update([
+                'name' => $validated['full_name'],
+                'is_active' => $validated['status'] === 'ACTIVE',
+            ]);
         }
 
         return back()->with('status', (string) d('common.success'));

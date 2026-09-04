@@ -145,18 +145,25 @@ class Nav
      * @param  array<string, mixed>  $d
      * @return list<array{label: string, href: string, icon: string}>
      */
-    public static function member(array $d): array
+    public static function member(array $d, bool $hasOpenElection = false): array
     {
         $dash = $d['dashboard'];
 
-        return [
+        $links = [
             ['label' => $dash['overview'], 'href' => '/dashboard', 'icon' => 'layout'],
             ['label' => $dash['digitalId'], 'href' => '/dashboard/id', 'icon' => 'id'],
             ['label' => $dash['profile'], 'href' => '/dashboard/profile', 'icon' => 'user'],
             ['label' => $dash['benefits'], 'href' => '/dashboard/benefits', 'icon' => 'heart'],
             ['label' => $dash['payments'], 'href' => '/dashboard/payments', 'icon' => 'wallet'],
             ['label' => $dash['events'], 'href' => '/dashboard/events', 'icon' => 'calendar'],
-            ['label' => $dash['eVoting'], 'href' => '/dashboard/vote', 'icon' => 'vote'],
+        ];
+
+        if ($hasOpenElection) {
+            $links[] = ['label' => $dash['eVoting'], 'href' => '/dashboard/vote', 'icon' => 'vote'];
+        }
+
+        return [
+            ...$links,
             ['label' => $dash['suggestions'], 'href' => '/dashboard/suggestions', 'icon' => 'message'],
             ['label' => $dash['announcements'], 'href' => '/dashboard/announcements', 'icon' => 'megaphone'],
             ['label' => $dash['tickets'], 'href' => '/dashboard/tickets', 'icon' => 'lifebuoy'],

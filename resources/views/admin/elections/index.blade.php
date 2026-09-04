@@ -22,7 +22,19 @@
                     <p class="font-extrabold">{{ $election->translate('title') }}</p>
                     <p class="text-sm text-ink-500">{{ $election->status }} · {{ $election->candidates_count }} candidates · {{ $election->votes_count }} votes</p>
                 </div>
-                <a class="font-bold text-brand-700" href="{{ route('admin.elections.report', $election) }}">{{ $d['admin']['electionReport'] }}</a>
+                <div class="flex flex-wrap items-center gap-3">
+                    <form method="POST" action="{{ route('admin.elections.update', $election) }}" class="flex items-center gap-2">
+                        @csrf
+                        @method('PUT')
+                        <select class="field mt-0" name="status">
+                            @foreach (['DRAFT', 'OPEN', 'CLOSED'] as $status)
+                                <option value="{{ $status }}" @selected($election->status === $status)>{{ $status }}</option>
+                            @endforeach
+                        </select>
+                        <button class="btn btn-outline h-10" type="submit">{{ $d['common']['save'] }}</button>
+                    </form>
+                    <a class="font-bold text-brand-700" href="{{ route('admin.elections.report', $election) }}">{{ $d['admin']['electionReport'] }}</a>
+                </div>
             </div>
             <form method="POST" action="{{ route('admin.elections.candidates', $election) }}" class="mt-4 grid gap-2 sm:grid-cols-3">
                 @csrf

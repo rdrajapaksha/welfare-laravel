@@ -78,6 +78,7 @@ class WelfareSeeder extends Seeder
             'emergency_name' => 'Sandya Perera',
             'emergency_phone' => '0771234599',
             'bio' => 'Member since 2018. Volunteers at medical camps in the Bandarawela area.',
+            'photo_url' => '/media/officers/member.svg',
             'show_in_directory' => true,
             'user_id' => $memberUser->id,
         ]);
@@ -146,6 +147,7 @@ class WelfareSeeder extends Seeder
                 'இல. 272, கிரிமடுகொட, பண்டாரவளை.',
                 '076 818 5377',
                 'EXECUTIVE',
+                '/media/officers/president.svg',
             ],
             [
                 'A.M. Ajith Rupasinghe',
@@ -157,6 +159,7 @@ class WelfareSeeder extends Seeder
                 '72/3, வடக்கு கோவில்வெல, பண்டாரவளை.',
                 '070 337 9955',
                 'EXECUTIVE',
+                '/media/officers/secretary.svg',
             ],
             [
                 'M.S. Jayantha',
@@ -168,6 +171,7 @@ class WelfareSeeder extends Seeder
                 'இல. 27, கலபிட்டகெதர, புலத்வெல.',
                 '077 296 5300',
                 'EXECUTIVE',
+                '/media/officers/treasurer.svg',
             ],
             [
                 'I.P.P. Ratnayake',
@@ -179,6 +183,7 @@ class WelfareSeeder extends Seeder
                 'பிரிவுச் செயலகம், பண்டாரவளை.',
                 '071 443 5277',
                 'ADVISORY',
+                '/media/officers/patron.svg',
             ],
         ];
 
@@ -189,6 +194,7 @@ class WelfareSeeder extends Seeder
                 ...$this->t('bio', $row[4], $row[5], $row[6]),
                 'phone' => $row[7],
                 'board' => $row[8],
+                'photo_url' => $row[9],
                 'term_from' => 2024,
                 'term_to' => 2026,
                 'sort_order' => $i,
@@ -739,7 +745,7 @@ class WelfareSeeder extends Seeder
             'slug' => 'agm-2026-office-bearers',
             ...$this->t('title', 'AGM 2026 — Office Bearers', '2026 මහා සභාව — නිලධාරී මණ්ඩලය', 'AGM 2026 — அலுவலர் குழு'),
             ...$this->t('description', 'Confidential e-vote for the 2026–2028 committee. One vote per active member.', 'රහසිගත ඊ-ඡන්දය. ක්‍රියාකාරී සාමාජිකයෙකුට එක් ඡන්දයක්.', 'ரகசிய மின் வாக்களிப்பு.'),
-            'status' => 'OPEN',
+            'status' => 'DRAFT',
             'opens_at' => now()->subDays(2),
             'closes_at' => now()->addDays(21),
         ]);

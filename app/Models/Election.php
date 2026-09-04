@@ -36,7 +36,27 @@ class Election extends Model
     #[Scope]
     protected function open(Builder $query): Builder
     {
-        return $query->where('status', 'OPEN')->orderByDesc('opens_at');
+        return $query->where('status', 'OPEN')
+            ->where(function (Builder $inner): void {
+                $inner->whereNull('opens_at')->orWhere('opens_at', '<=', now());
+            })
+            ->where(function (Builder $inner): void {
+                $inner->whereNull('closes_at')->orWhere('closes_at', '>=', now());
+            })
+            ->orderByDesc('opens_at');
+    }
+
+    public function isOpen(): bool
+    {
+        if ($this->status !== 'OPEN') {
+            return false;
+        }
+
+        if ($this->opens_at?->isFuture()) {
+            return false;
+        }
+
+        return ! $this->closes_at?->isPast();
     }
 
     public function candidates(): HasMany

@@ -112,6 +112,7 @@ Route::prefix('{locale}')
             Route::delete('/announcements/{announcement}', [Admin\AnnouncementController::class, 'destroy'])->name('announcements.destroy');
             Route::get('/elections', [Admin\ElectionController::class, 'index'])->name('elections.index');
             Route::post('/elections', [Admin\ElectionController::class, 'store'])->name('elections.store');
+            Route::put('/elections/{election}', [Admin\ElectionController::class, 'update'])->name('elections.update');
             Route::post('/elections/{election}/candidates', [Admin\ElectionController::class, 'addCandidate'])->name('elections.candidates');
             Route::get('/elections/{election}/report', [Admin\ElectionController::class, 'report'])->name('elections.report');
             Route::get('/suggestions', [Admin\SuggestionController::class, 'index'])->name('suggestions.index');

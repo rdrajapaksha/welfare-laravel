@@ -32,6 +32,7 @@ class StoreCommitteeMemberRequest extends FormRequest
             'term_from' => ['required', 'integer', 'min:2000', 'max:2100'],
             'term_to' => ['nullable', 'integer', 'min:2000', 'max:2100'],
             'is_current' => ['sometimes', 'boolean'],
+            'photo' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
         ];
     }
 

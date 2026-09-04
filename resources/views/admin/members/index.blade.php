@@ -15,7 +15,12 @@
             @foreach ($members as $member)
                 <tr class="border-t border-ink-100">
                     <td class="py-3 font-semibold">{{ $member->membership_no }}</td>
-                    <td>{{ $member->full_name }}</td>
+                    <td>
+                        <div class="flex items-center gap-3">
+                            <x-person-photo :src="$member->photo_url" :name="$member->full_name" size="sm" />
+                            <span>{{ $member->full_name }}</span>
+                        </div>
+                    </td>
                     <td>{{ $member->nic }}</td>
                     <td>{{ $member->status }}</td>
                     <td><a class="font-bold text-brand-700" href="{{ route('admin.members.show', $member) }}">{{ $d['admin']['viewMember'] }}</a></td>

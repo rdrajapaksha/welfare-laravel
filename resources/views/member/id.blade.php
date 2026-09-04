@@ -8,14 +8,15 @@
         <p class="text-xs uppercase tracking-wider">{{ $d['brand']['full'] }}</p>
         <p class="mt-1 font-times italic">{{ $d['brand']['tagline'] }}</p>
     </div>
-    <div class="grid grid-cols-[1fr_8rem] gap-4 p-6">
-        <div>
+    <div class="grid grid-cols-[auto_1fr_6.5rem] items-start gap-4 p-6">
+        <x-person-photo :src="$member->photo_url" :name="$member->full_name" size="id" />
+        <div class="min-w-0">
             <p class="text-xs text-ink-500">{{ $d['members']['membershipNo'] }}</p>
             <p class="text-lg font-extrabold">{{ $member->membership_no }}</p>
-            <p class="mt-4 text-xl font-extrabold">{{ $member->full_name }}</p>
+            <p class="mt-4 text-xl font-extrabold leading-snug">{{ $member->full_name }}</p>
             <p class="text-sm text-ink-600">{{ $member->membership_type }} · {{ $member->status }}</p>
         </div>
-        <img alt="{{ $d['dashboard']['qrAlt'] }}" class="h-32 w-32" src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data={{ urlencode($member->membership_no) }}">
+        <img alt="{{ $d['dashboard']['qrAlt'] }}" class="h-24 w-24" src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data={{ urlencode($member->membership_no) }}">
     </div>
 </div>
 @endsection

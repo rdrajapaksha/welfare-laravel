@@ -6,29 +6,25 @@ use App\Enums\CommitteeBoard;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCommitteeMemberRequest;
 use App\Models\CommitteeMember;
+use App\Support\PhotoStore;
 use Illuminate\Http\RedirectResponse;
 
 class CommitteeMemberController extends Controller
 {
-    public function store(StoreCommitteeMemberRequest $request): RedirectResponse
+    public function store(string $locale, StoreCommitteeMemberRequest $request): RedirectResponse
     {
         $validated = $request->validated();
         $board = CommitteeBoard::from($validated['board']);
 
         CommitteeMember::query()->create([
-            'name' => $validated['name'],
-            'position_en' => $validated['position_en'],
-            'position_si' => $validated['position_si'] !== '' ? $validated['position_si'] : $validated['position_en'],
-            'position_ta' => $validated['position_ta'] !== '' ? $validated['position_ta'] : $validated['position_en'],
-            'bio_en' => $validated['bio_en'] ?? '',
-            'bio_si' => ($validated['bio_si'] ?? '') !== '' ? $validated['bio_si'] : ($validated['bio_en'] ?? ''),
-            'bio_ta' => ($validated['bio_ta'] ?? '') !== '' ? $validated['bio_ta'] : ($validated['bio_en'] ?? ''),
+            ...$this->translatedFields($validated),
             'phone' => $validated['phone'] ?? null,
             'term_from' => $validated['term_from'],
             'term_to' => $validated['term_to'] ?? null,
             'board' => $board,
             'is_current' => true,
             'sort_order' => CommitteeMember::query()->where('board', $board)->count(),
+            'photo_url' => PhotoStore::store($request->file('photo'), 'committee'),
         ]);
 
         return back()->with('status', (string) d('common.success'));
@@ -39,18 +35,13 @@ class CommitteeMemberController extends Controller
         $validated = $request->validated();
 
         $committeeMember->update([
-            'name' => $validated['name'],
-            'position_en' => $validated['position_en'],
-            'position_si' => $validated['position_si'] !== '' ? $validated['position_si'] : $validated['position_en'],
-            'position_ta' => $validated['position_ta'] !== '' ? $validated['position_ta'] : $validated['position_en'],
-            'bio_en' => $validated['bio_en'] ?? '',
-            'bio_si' => ($validated['bio_si'] ?? '') !== '' ? $validated['bio_si'] : ($validated['bio_en'] ?? ''),
-            'bio_ta' => ($validated['bio_ta'] ?? '') !== '' ? $validated['bio_ta'] : ($validated['bio_en'] ?? ''),
+            ...$this->translatedFields($validated),
             'phone' => $validated['phone'] ?? null,
             'term_from' => $validated['term_from'],
             'term_to' => $validated['term_to'] ?? null,
             'board' => CommitteeBoard::from($validated['board']),
             'is_current' => $request->boolean('is_current'),
+            'photo_url' => PhotoStore::store($request->file('photo'), 'committee', $committeeMember->photo_url),
         ]);
 
         return back()->with('status', (string) d('common.success'));
@@ -61,5 +52,22 @@ class CommitteeMemberController extends Controller
         $committeeMember->delete();
 
         return back()->with('status', (string) d('common.success'));
+    }
+
+    /**
+     * @param  array<string, mixed>  $validated
+     * @return array<string, mixed>
+     */
+    private function translatedFields(array $validated): array
+    {
+        return [
+            'name' => $validated['name'],
+            'position_en' => $validated['position_en'],
+            'position_si' => $validated['position_si'] !== '' ? $validated['position_si'] : $validated['position_en'],
+            'position_ta' => $validated['position_ta'] !== '' ? $validated['position_ta'] : $validated['position_en'],
+            'bio_en' => $validated['bio_en'] ?? '',
+            'bio_si' => ($validated['bio_si'] ?? '') !== '' ? $validated['bio_si'] : ($validated['bio_en'] ?? ''),
+            'bio_ta' => ($validated['bio_ta'] ?? '') !== '' ? $validated['bio_ta'] : ($validated['bio_en'] ?? ''),
+        ];
     }
 }

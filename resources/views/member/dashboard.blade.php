@@ -9,10 +9,12 @@
         <a href="{{ locale_url('/dashboard/payments') }}" class="mt-2 inline-block text-sm font-bold">{{ $d['fees']['viewPayments'] }}</a>
     </div>
 @endif
-<div class="mt-8 grid gap-4 sm:grid-cols-3">
-    <a href="{{ locale_url('/dashboard/id') }}" class="card-surface p-5 font-bold">{{ $d['dashboard']['digitalId'] }}</a>
-    <a href="{{ locale_url('/dashboard/payments') }}" class="card-surface p-5 font-bold">{{ $d['dashboard']['payments'] }}</a>
-    <a href="{{ locale_url('/dashboard/vote') }}" class="card-surface p-5 font-bold">{{ $d['dashboard']['eVoting'] }}</a>
+<div class="mt-8 grid gap-4 sm:grid-cols-2 {{ $hasOpenElection ? 'lg:grid-cols-3' : 'lg:grid-cols-2' }}">
+    <a href="{{ locale_url('/dashboard/id') }}" class="card-surface card-interactive p-5 font-bold">{{ $d['dashboard']['digitalId'] }}</a>
+    <a href="{{ locale_url('/dashboard/payments') }}" class="card-surface card-interactive p-5 font-bold">{{ $d['dashboard']['payments'] }}</a>
+    @if ($hasOpenElection)
+        <a href="{{ locale_url('/dashboard/vote') }}" class="card-surface card-interactive p-5 font-bold">{{ $d['dashboard']['eVoting'] }}</a>
+    @endif
 </div>
 <div class="mt-8 grid gap-6 lg:grid-cols-2">
     <div class="card-surface p-5">

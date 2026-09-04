@@ -21,10 +21,13 @@
         </form>
         <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             @foreach ($members as $member)
-                <article class="card-surface p-5">
-                    <h2 class="font-extrabold">{{ $member->full_name }}</h2>
-                    <p class="text-sm text-ink-500">{{ $member->membership_no }} · {{ $member->city }}</p>
-                    <p class="mt-1 text-xs">{{ $member->membership_type }}</p>
+                <article class="card-surface flex items-center gap-4 p-5">
+                    <x-person-photo :src="$member->photo_url" :name="$member->full_name" size="sm" />
+                    <div class="min-w-0">
+                        <h2 class="font-extrabold">{{ $member->full_name }}</h2>
+                        <p class="text-sm text-ink-500">{{ $member->membership_no }} · {{ $member->city }}</p>
+                        <p class="mt-1 text-xs">{{ $member->membership_type }}</p>
+                    </div>
                 </article>
             @endforeach
         </div>

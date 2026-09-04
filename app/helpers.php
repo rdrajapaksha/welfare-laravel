@@ -1,6 +1,7 @@
 <?php
 
 use App\Support\Dictionary;
+use App\Support\PhotoStore;
 
 if (! function_exists('d')) {
     /**
@@ -47,6 +48,16 @@ if (! function_exists('lkr')) {
     function lkr(int $amount): string
     {
         return 'Rs. '.number_format($amount);
+    }
+}
+
+if (! function_exists('person_photo_url')) {
+    /**
+     * Public URL for a stored or bundled person photo.
+     */
+    function person_photo_url(?string $path): ?string
+    {
+        return PhotoStore::url($path);
     }
 }
 

@@ -61,7 +61,7 @@
                     <a href="{{ switch_locale_url($code) }}" class="rounded-full px-2 py-1 {{ $locale === $code ? 'bg-brand-600 text-white' : 'text-ink-600 hover:text-brand-700' }}">{{ $meta['short'] }}</a>
                 @endforeach
             </div>
-            <a href="{{ locale_url('/donations') }}" class="inline-flex h-9 items-center gap-1.5 rounded-full bg-brand-600 px-3 text-sm font-bold text-white shadow-glow transition hover:bg-brand-700">
+            <a href="{{ locale_url('/donations') }}" class="inline-flex h-9 items-center rounded-full bg-brand-600 px-3 text-xs font-bold text-white shadow-glow transition hover:bg-brand-700 sm:text-sm">
                 {{ $d['nav']['donateNow'] }}
             </a>
             <button type="button" class="grid h-9 w-9 place-items-center rounded-full border border-ink-200 text-ink-800 xl:hidden" @click="mobileOpen = true" aria-label="{{ $d['nav']['openMenu'] }}">

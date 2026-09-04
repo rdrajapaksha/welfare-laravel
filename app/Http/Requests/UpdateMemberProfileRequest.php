@@ -29,6 +29,7 @@ class UpdateMemberProfileRequest extends FormRequest
             'emergency_phone' => ['nullable', 'string', 'max:20'],
             'bio' => ['nullable', 'string', 'max:1000'],
             'show_in_directory' => ['sometimes', 'boolean'],
+            'photo' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
         ];
     }
 

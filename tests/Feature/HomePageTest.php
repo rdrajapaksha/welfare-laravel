@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+use App\Enums\CommitteeBoard;
+use App\Models\CommitteeMember;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -18,6 +20,20 @@ class HomePageTest extends TestCase
             ->assertSee('Bandarawela', false)
             ->assertSee('070 337 9955', false)
             ->assertSee('076 818 5377', false);
+    }
+
+    public function test_home_page_does_not_render_executive_committee_cards(): void
+    {
+        CommitteeMember::factory()->create([
+            'name' => 'H.M.C.P.K. Herath',
+            'position_en' => 'Hon. President',
+            'is_current' => true,
+            'board' => CommitteeBoard::Executive,
+        ]);
+
+        $this->get('/en')
+            ->assertDontSee('H.M.C.P.K. Herath', false)
+            ->assertDontSee('Hon. President', false);
     }
 
     public function test_contact_page_renders_registered_office(): void
