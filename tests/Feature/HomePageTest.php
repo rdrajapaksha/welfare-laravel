@@ -43,6 +43,24 @@ class HomePageTest extends TestCase
             ->assertDontSee('Hon. President', false);
     }
 
+    public function test_home_page_shows_current_society_scale_not_demo_figures(): void
+    {
+        $this->get('/en')
+            ->assertSee('Active members', false)
+            ->assertSee('text-3xl font-extrabold">30</p>', false)
+            ->assertSee('6,250', false)
+            ->assertSee('Rs. 48,600,000', false)
+            ->assertSee('Registered volunteers', false)
+            ->assertSee('text-3xl font-extrabold">10</p>', false)
+            ->assertSee('Audited figures, updated every quarter.', false)
+            ->assertSee('Since 2025 Heart Link Allianze', false)
+            ->assertSee('from Bandarawela since 2025', false)
+            ->assertDontSee('1,840', false)
+            ->assertDontSee('420', false)
+            ->assertDontSee('For over a decade', false)
+            ->assertDontSee('since 2013', false);
+    }
+
     public function test_contact_page_renders_registered_office(): void
     {
         $this->get('/en/contact')

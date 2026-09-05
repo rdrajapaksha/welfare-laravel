@@ -59,7 +59,7 @@ class FeeController extends Controller
     {
         $validated = $request->validate([
             'member_id' => ['required', 'exists:members,id'],
-            'year' => ['required', 'integer', 'min:2013'],
+            'year' => ['required', 'integer', 'min:'.(int) config('hla.founded_year')],
             'month' => ['required', 'integer', 'min:1', 'max:12'],
             'method' => ['required', 'in:BANK_TRANSFER,CASH,CHEQUE'],
         ]);

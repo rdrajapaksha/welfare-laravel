@@ -133,39 +133,30 @@ class AboutContent
     {
         return [
             [
-                'year' => '2013',
-                'title' => ['en' => 'A neighbourhood collection tin', 'si' => 'අසල්වාසී එකතු කිරීමේ පෙට්ටිය', 'ta' => 'அண்டை வீட்டு நன்கொடைப் பெட்டி'],
+                'year' => '2025',
+                'title' => ['en' => 'Society founded', 'si' => 'සමිතිය ආරම්භය', 'ta' => 'சங்கம் தொடக்கம்'],
                 'text' => [
-                    'en' => 'Twelve families in Bandarawela started a weekly collection to cover funeral costs for neighbours who could not. The tin sat on a shop counter in Mahulpotha.',
-                    'si' => 'බණ්ඩාරවෙලේ පවුල් දොළහක්, එයට නොහැකි අසල්වැසියන්ගේ අවමංගල්‍ය වියදම් ආවරණය කිරීමට සතිපතා එකතුවක් ආරම්භ කළහ.',
-                    'ta' => 'பண்டாரவளையில் பன்னிரண்டு குடும்பங்கள், முடியாத அண்டை வீட்டினரின் இறுதிச் சடங்குச் செலவை ஈடுசெய்ய வாராந்திர சேகரிப்பைத் தொடங்கினர்.',
-                ],
-            ],
-            [
-                'year' => '2016',
-                'title' => ['en' => 'Registered as a welfare association', 'si' => 'සුබසාධක සමිතියක් ලෙස ලියාපදිංචිය', 'ta' => 'நலன்புரி சங்கமாகப் பதிவு'],
-                'text' => [
-                    'en' => 'The group adopted a constitution, elected its first committee and registered as Heart Link Allianze (BD/BW/SSW/01/149).',
-                    'si' => 'කණ්ඩායම ව්‍යවස්ථාවක් සම්මත කර, පළමු කමිටුව තෝරා හදවතේ යාළුවෝ සුබසාධක සංසදය ලෙස ලියාපදිංචි විය (BD/BW/SSW/01/149).',
-                    'ta' => 'குழு அரசியலமைப்பை ஏற்று, முதல் குழுவைத் தேர்ந்தெடுத்து Heart Link Allianze ஆகப் பதிவு செய்தது (BD/BW/SSW/01/149).',
-                ],
-            ],
-            [
-                'year' => '2020',
-                'title' => ['en' => 'Pandemic relief', 'si' => 'වසංගත සහනය', 'ta' => 'தொற்றுநோய் நிவாரணம்'],
-                'text' => [
-                    'en' => 'Dry-ration packs reached 1,860 households in 11 districts. Accounts for that year were published in full.',
-                    'si' => 'දිස්ත්‍රික්ක 11 ක නිවෙස් 1,860 කට වියළි සැනකිලි ඇසුරුම් ළඟා විය.',
-                    'ta' => '11 மாவட்டங்களில் 1,860 வீடுகளுக்கு உலர் உணவுப் பொதிகள் சென்றடைந்தன.',
+                    'en' => 'Heart Link Allianze Welfare Society was formed in Bandarawela in 2025 and registered as BD/BW/SSW/01/149.',
+                    'si' => 'හදවතේ යාළුවෝ සුබසාධක සංසදය 2025 දී බණ්ඩාරවෙලේදී ආරම්භ වී BD/BW/SSW/01/149 යටතේ ලියාපදිංචි විය.',
+                    'ta' => 'Heart Link Allianze Welfare Society 2025 இல் பண்டாரவளையில் உருவாக்கப்பட்டு BD/BW/SSW/01/149 ஆகப் பதிவு செய்யப்பட்டது.',
                 ],
             ],
             [
                 'year' => '2025',
-                'title' => ['en' => 'Flood response and housing', 'si' => 'ගංවතුර ප්‍රතිචාරය සහ නිවාස', 'ta' => 'வெள்ளப் பதிலும் வீடமைப்பும்'],
+                'title' => ['en' => 'Disaster relief', 'si' => 'ආපදා සහනය', 'ta' => 'பேரிடர் நிவாரணம்'],
                 'text' => [
-                    'en' => 'The May floods triggered the largest single relief operation in our history, followed by the Sarana housing project.',
-                    'si' => 'මැයි ගංවතුර අපගේ ඉතිහාසයේ විශාලතම තනි සහන මෙහෙයුම අවුලුවා සරණ නිවාස ව්‍යාපෘතිය ආරම්භ විය.',
-                    'ta' => 'மே வெள்ளம் எமது வரலாற்றின் மிகப்பெரிய தனி நிவாரண நடவடிக்கையைத் தூண்டியது.',
+                    'en' => 'Members delivered food, milk and relief to camps and families after severe weather hit Bandarawela and nearby areas.',
+                    'si' => 'බණ්ඩාරවෙල සහ අවට ප්‍රදේශවලට බලපෑ දරුණු කාලගුණයෙන් පසු සාමාජිකයින් ආහාර, කිරි සහ සහන බෙදා දුන්හ.',
+                    'ta' => 'பண்டாரவளை மற்றும் அருகிலுள்ள பகுதிகளைப் பாதித்த கடுமையான வானிலைக்குப் பின் உறுப்பினர்கள் உணவு, பால் மற்றும் நிவாரணம் வழங்கினர்.',
+                ],
+            ],
+            [
+                'year' => '2026',
+                'title' => ['en' => 'Community programmes', 'si' => 'ප්‍රජා වැඩසටහන්', 'ta' => 'சமூக நிகழ்ச்சிகள்'],
+                'text' => [
+                    'en' => 'In the first full year the society ran medical, education, livelihood, sports and Vesak programmes in the community.',
+                    'si' => 'පළමු සම්පූර්ණ වසරේදී සමිතිය වෛද්‍ය, අධ්‍යාපන, ජීවනෝපාය, ක්‍රීඩා සහ වෙසක් වැඩසටහන් පවත්වන ලදී.',
+                    'ta' => 'முதல் முழு ஆண்டில் சங்கம் மருத்துவம், கல்வி, வாழ்வாதாரம், விளையாட்டு மற்றும் வேசாக் நிகழ்ச்சிகளை நடத்தியது.',
                 ],
             ],
         ];

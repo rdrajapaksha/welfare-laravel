@@ -4,7 +4,7 @@ return [
     'name' => 'Heart Link Allianze Welfare Society',
     'short_name' => 'Heart Link Allianze',
     'registration_no' => 'BD/BW/SSW/01/149',
-    'founded_year' => 2013,
+    'founded_year' => 2025,
     'locales' => ['en', 'si', 'ta'],
     'default_locale' => 'en',
 
@@ -38,11 +38,11 @@ return [
     ],
 
     'impact' => [
-        'members' => 1840,
+        'members' => 30,
         'families_assisted' => 6250,
         'welfare_disbursed' => 48600000,
         'projects' => 20,
-        'volunteers' => 420,
+        'volunteers' => 10,
     ],
 
     'social' => [

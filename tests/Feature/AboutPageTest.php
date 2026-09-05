@@ -20,6 +20,17 @@ class AboutPageTest extends TestCase
             ->assertSee('To contribute towards building a healthier, happier and more compassionate society.', false);
     }
 
+    public function test_about_page_history_starts_from_2025_founding(): void
+    {
+        $this->get('/en/about')
+            ->assertSee('Society founded', false)
+            ->assertSee('Heart Link Allianze Welfare Society was formed in Bandarawela in 2025', false)
+            ->assertSee('BD/BW/SSW/01/149', false)
+            ->assertDontSee('A neighbourhood collection tin', false)
+            ->assertDontSee('1,860 households', false)
+            ->assertDontSee('Sarana housing', false);
+    }
+
     public function test_about_page_does_not_render_committee_shortcut_cards(): void
     {
         $this->get('/en/about')
