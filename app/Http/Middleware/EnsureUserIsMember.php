@@ -16,7 +16,13 @@ class EnsureUserIsMember
         $user = $request->user();
 
         if ($user === null) {
-            return redirect()->guest(route('login'));
+            $locale = $request->route('locale');
+
+            if (! is_string($locale) || ! in_array($locale, config('hla.locales'), true)) {
+                $locale = (string) config('hla.default_locale');
+            }
+
+            return redirect()->guest(route('login', ['locale' => $locale]));
         }
 
         if (! $user->is_active) {

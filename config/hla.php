@@ -41,7 +41,7 @@ return [
         'members' => 1840,
         'families_assisted' => 6250,
         'welfare_disbursed' => 48600000,
-        'projects' => 34,
+        'projects' => 20,
         'volunteers' => 420,
     ],
 

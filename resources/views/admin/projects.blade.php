@@ -12,6 +12,11 @@
         <option value="ONGOING">ONGOING</option>
         <option value="COMPLETED">COMPLETED</option>
     </select>
+    <select class="field" name="theme">
+        @foreach (\App\Models\Project::THEMES as $theme)
+            <option value="{{ $theme }}">{{ $d['projects']['themes'][strtolower($theme)] }}</option>
+        @endforeach
+    </select>
     <input class="field" type="number" name="target_amount" min="0" required placeholder="Target (LKR)">
     <input class="field" type="number" name="raised_amount" min="0" placeholder="Raised (LKR)">
     @include('admin.partials.image-field', ['name' => 'cover_image'])
@@ -39,6 +44,11 @@
             <select class="field" name="status">
                 @foreach (['PLANNED', 'ONGOING', 'COMPLETED'] as $status)
                     <option value="{{ $status }}" @selected(old('status', $project->status) === $status)>{{ $status }}</option>
+                @endforeach
+            </select>
+            <select class="field" name="theme">
+                @foreach (\App\Models\Project::THEMES as $theme)
+                    <option value="{{ $theme }}" @selected(old('theme', $project->theme) === $theme)>{{ $d['projects']['themes'][strtolower($theme)] }}</option>
                 @endforeach
             </select>
             <input class="field" type="number" name="target_amount" min="0" required value="{{ old('target_amount', $project->target_amount) }}">

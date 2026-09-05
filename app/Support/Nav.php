@@ -153,6 +153,7 @@ class Nav
             ['label' => $dash['benefits'], 'href' => '/dashboard/benefits', 'icon' => 'heart'],
             ['label' => $dash['payments'], 'href' => '/dashboard/payments', 'icon' => 'wallet'],
             ['label' => $dash['events'], 'href' => '/dashboard/events', 'icon' => 'calendar'],
+            ['label' => $dash['meetings'], 'href' => '/dashboard/meetings', 'icon' => 'calendar'],
         ];
 
         if ($hasOpenElection) {
@@ -197,6 +198,7 @@ class Nav
             ['label' => $admin['volunteers'], 'href' => '/admin/volunteers', 'icon' => 'heart'],
             ['label' => $admin['messages'], 'href' => '/admin/messages', 'icon' => 'mail'],
             ['label' => $admin['announcements'], 'href' => '/admin/announcements', 'icon' => 'megaphone'],
+            ['label' => $admin['meetings'], 'href' => '/admin/meetings', 'icon' => 'calendar'],
             ['label' => $admin['committeePage'], 'href' => '/admin/committee', 'icon' => 'users'],
             ['label' => $admin['content'], 'href' => '/admin/content', 'icon' => 'settings'],
         ];

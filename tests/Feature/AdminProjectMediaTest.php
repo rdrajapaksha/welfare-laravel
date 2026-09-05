@@ -42,6 +42,7 @@ class AdminProjectMediaTest extends TestCase
                 'summary_en' => 'Homes for families after the floods.',
                 'location' => 'Bandarawela',
                 'status' => 'ONGOING',
+                'theme' => 'COMMUNITY',
                 'target_amount' => 2500000,
                 'cover_image' => UploadedFile::fake()->image('cover.jpg', 800, 500),
                 'photos' => [
@@ -126,6 +127,7 @@ class AdminProjectMediaTest extends TestCase
                 'summary_en' => $project->summary_en,
                 'location' => $project->location,
                 'status' => $project->status,
+                'theme' => $project->theme,
                 'target_amount' => $project->target_amount,
                 'raised_amount' => $project->raised_amount,
                 'cover_image' => UploadedFile::fake()->image('new-cover.jpg', 800, 500),

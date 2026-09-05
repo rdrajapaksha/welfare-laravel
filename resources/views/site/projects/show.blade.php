@@ -28,12 +28,25 @@
             </div>
         </article>
         <aside class="card-surface h-fit space-y-4 p-6">
-            <p class="text-xs font-bold uppercase tracking-[0.14em] text-brand-700">{{ $project->status }}</p>
-            <p>{{ $d['projects']['raised'] }}: <strong>{{ lkr($project->raised_amount) }}</strong></p>
-            <p>{{ $d['projects']['target'] }}: <strong>{{ lkr($project->target_amount) }}</strong></p>
-            <p>{{ $d['projects']['spent'] }}: <strong>{{ lkr($project->spent_amount) }}</strong></p>
-            <p>{{ $d['projects']['beneficiaries'] }}: <strong>{{ number_format($project->beneficiaries) }}</strong></p>
-            @if ($project->status === 'ONGOING')
+            <p class="inline-flex rounded-full px-3 py-1 text-xs font-bold uppercase tracking-[0.14em] ring-1 {{ $project->themeChipClass() }}">{{ $project->themeLabel() }}</p>
+            <p class="text-xs font-bold uppercase tracking-[0.14em] text-teal-700">{{ $d['projects']['status'.ucfirst(strtolower($project->status))] ?? $project->status }}</p>
+            @if ($project->location)
+                <p>{{ $d['projects']['location'] }}: <strong>{{ $project->location }}</strong></p>
+            @endif
+            @if ($project->completed_at)
+                <p>{{ $d['projects']['completedOn'] }}: <strong>{{ $project->completed_at->toFormattedDateString() }}</strong></p>
+            @endif
+            @if ($project->hasFundraising())
+                <p>{{ $d['projects']['raised'] }}: <strong>{{ lkr($project->raised_amount) }}</strong></p>
+                <p>{{ $d['projects']['target'] }}: <strong>{{ lkr($project->target_amount) }}</strong></p>
+            @endif
+            @if ((int) $project->spent_amount > 0)
+                <p>{{ $d['projects']['spent'] }}: <strong>{{ lkr($project->spent_amount) }}</strong></p>
+            @endif
+            @if ((int) $project->beneficiaries > 0)
+                <p>{{ $d['projects']['beneficiaries'] }}: <strong>{{ number_format($project->beneficiaries) }}</strong></p>
+            @endif
+            @if ($project->status === 'ONGOING' && $project->hasFundraising())
                 <a href="{{ locale_url('/donations', ['project' => $project->slug]) }}" class="btn btn-brand w-full">{{ $d['projects']['fundProject'] }}</a>
             @endif
         </aside>

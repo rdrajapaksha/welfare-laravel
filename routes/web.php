@@ -62,6 +62,7 @@ Route::prefix('{locale}')
             Route::get('/dashboard/payments', [Member\PaymentController::class, 'index'])->name('member.payments');
             Route::post('/dashboard/payments', [Member\PaymentController::class, 'store'])->name('member.payments.store');
             Route::get('/dashboard/events', [Member\EventController::class, 'index'])->name('member.events');
+            Route::get('/dashboard/meetings', [Member\MemberMeetingController::class, 'index'])->name('member.meetings');
             Route::get('/dashboard/vote', [Member\VoteController::class, 'index'])->name('member.vote');
             Route::post('/dashboard/vote/{election}', [Member\VoteController::class, 'store'])->name('member.vote.store');
             Route::get('/dashboard/suggestions', [Member\SuggestionController::class, 'index'])->name('member.suggestions');
@@ -118,6 +119,10 @@ Route::prefix('{locale}')
             Route::get('/announcements', [Admin\AnnouncementController::class, 'index'])->name('announcements.index');
             Route::post('/announcements', [Admin\AnnouncementController::class, 'store'])->name('announcements.store');
             Route::delete('/announcements/{announcement}', [Admin\AnnouncementController::class, 'destroy'])->name('announcements.destroy');
+            Route::get('/meetings', [Admin\MemberMeetingController::class, 'index'])->name('meetings.index');
+            Route::post('/meetings', [Admin\MemberMeetingController::class, 'store'])->name('meetings.store');
+            Route::put('/meetings/{meeting}', [Admin\MemberMeetingController::class, 'update'])->name('meetings.update');
+            Route::delete('/meetings/{meeting}', [Admin\MemberMeetingController::class, 'destroy'])->name('meetings.destroy');
             Route::get('/elections', [Admin\ElectionController::class, 'index'])->name('elections.index');
             Route::post('/elections', [Admin\ElectionController::class, 'store'])->name('elections.store');
             Route::put('/elections/{election}', [Admin\ElectionController::class, 'update'])->name('elections.update');

@@ -20,6 +20,16 @@ return Application::configure(basePath: dirname(__DIR__))
             'admin' => EnsureUserIsAdmin::class,
             'member' => EnsureUserIsMember::class,
         ]);
+
+        $middleware->redirectGuestsTo(function (Request $request): string {
+            $locale = $request->route('locale');
+
+            if (! is_string($locale) || ! in_array($locale, config('hla.locales'), true)) {
+                $locale = (string) config('hla.default_locale');
+            }
+
+            return route('login', ['locale' => $locale]);
+        });
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(

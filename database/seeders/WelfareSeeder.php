@@ -86,7 +86,7 @@ class WelfareSeeder extends Seeder
         $this->committee();
         $this->aboutSettings();
         $this->programmes();
-        $projects = $this->projects();
+        $this->call(CommunityWorkSeeder::class);
         $this->partners();
         $this->faqs();
         $this->documents();
@@ -99,7 +99,7 @@ class WelfareSeeder extends Seeder
         $this->news();
         $this->events();
         $this->gallery();
-        $this->allocations($projects[0] ?? null);
+        $this->allocations(Project::query()->where('slug', 'relief-aid-bandarawela-2025')->first());
         $this->tickets($demoMember, $memberUser, $admin);
         $this->announcements();
         $this->applications();
@@ -247,39 +247,6 @@ class WelfareSeeder extends Seeder
                 ...$this->t('eligibility', 'Members in good standing.', 'යාවත්කාලීන සාමාජිකයින්.', 'நிலுவையற்ற உறுப்பினர்கள்.'),
             ]);
         }
-    }
-
-    /**
-     * @return list<Project>
-     */
-    private function projects(): array
-    {
-        $items = [
-            ['sarana-housing-2026', 'Sarana Housing 2026', 'සරණ නිවාස 2026', 'சரண வீடமைப்பு 2026', 'Homagama', 8500000, 4200000, 2100000, 18, 'ONGOING', '/media/housing-project.svg'],
-            ['diyawara-water-project', 'Diyawara Water Project', 'දියවර ජල ව්‍යාපෘතිය', 'தியவரா நீர் திட்டம்', 'Monaragala', 3200000, 1800000, 900000, 240, 'ONGOING', '/media/water-project.svg'],
-            ['pahana-scholarship-fund', 'Pahana Scholarship Fund', 'පහන ශිෂ්‍යත්ව අරමුදල', 'பஹன உதவித்தொகை நிதியம்', 'Island-wide', 2400000, 2400000, 1100000, 96, 'ONGOING', '/media/scholarship-award.svg'],
-        ];
-
-        $created = [];
-
-        foreach ($items as $item) {
-            $created[] = Project::query()->create([
-                'slug' => $item[0],
-                ...$this->t('title', $item[1], $item[2], $item[3]),
-                ...$this->t('summary', 'A community project delivered with members and partners.', 'සාමාජිකයින් සහ හවුල්කරුවන් සමඟ ප්‍රජා ව්‍යාපෘතියක්.', 'உறுப்பினர்கள் மற்றும் பங்காளிகளுடன் சமூகத் திட்டம்.'),
-                ...$this->t('body', '<p>Work is underway with volunteer labour and audited spending.</p>', '<p>ස්වේච්ඡා ශ්‍රමය සහ විගණිත වියදම් සමඟ කටයුතු කෙරේ.</p>', '<p>தொண்டர் உழைப்பு மற்றும் தணிக்கை செலவுடன் பணி நடைபெறுகிறது.</p>'),
-                'location' => $item[4],
-                'target_amount' => $item[5],
-                'raised_amount' => $item[6],
-                'spent_amount' => $item[7],
-                'beneficiaries' => $item[8],
-                'status' => $item[9],
-                'started_at' => now()->subMonths(8),
-                'cover_image' => $item[10],
-            ]);
-        }
-
-        return $created;
     }
 
     private function partners(): void
@@ -644,7 +611,7 @@ class WelfareSeeder extends Seeder
             'amount' => 840000,
             'category' => 'INFRASTRUCTURE',
             'spent_at' => now()->subDays(60),
-            ...$this->t('title', 'Roofing sheets — Sarana houses 8–10', 'වහල තහඩු', 'கூரைத் தகடு'),
+            ...$this->t('title', 'Relief packs — Bandarawela handover', 'සහන ඇසුරුම්', 'நிவாரணப் பொதிகள்'),
             ...$this->t('description', 'Paid to the supplier against delivery notes.', 'සැපයුම්කරුට ගෙවන ලදී.', 'வழங்குநருக்குச் செலுத்தப்பட்டது.'),
         ]);
         FundAllocation::query()->create([

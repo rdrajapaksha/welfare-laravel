@@ -25,7 +25,10 @@ class HomeController extends Controller
 
         return view('site.home', [
             'programmes' => Programme::active()->take(4)->get(),
-            'projects' => Project::query()->whereIn('status', ['ONGOING', 'PLANNED'])->latest('started_at')->take(3)->get(),
+            'projects' => Project::query()
+                ->completed()
+                ->take(3)
+                ->get(),
             'news' => NewsPost::published()->take(3)->get(),
             'events' => Event::published()->where('starts_at', '>=', now())->take(3)->get(),
             'partners' => Partner::active()->get(),

@@ -105,15 +105,7 @@
         <p class="mt-3 text-ink-600">{{ $d['home']['projectsSubtitle'] }}</p>
         <div class="mt-10 grid gap-5 lg:grid-cols-3">
             @foreach ($projects as $project)
-                <a href="{{ route('projects.show', $project) }}" class="card-surface card-interactive overflow-hidden">
-                    <img src="{{ media_url($project->cover_image, '/media/community-hall.svg') }}" alt="" class="h-48 w-full object-cover">
-                    <div class="p-6">
-                        <p class="text-xs font-bold uppercase text-teal-700">{{ $project->status }}</p>
-                        <h3 class="mt-2 font-extrabold">{{ $project->translate('title') }}</h3>
-                        <p class="mt-2 text-sm text-ink-600">{{ $project->translate('summary') }}</p>
-                        <p class="mt-4 text-sm font-semibold">{{ $d['projects']['raised'] }} {{ lkr($project->raised_amount) }} / {{ lkr($project->target_amount) }}</p>
-                    </div>
-                </a>
+                @include('partials.project-card', ['project' => $project])
             @endforeach
         </div>
     </div>

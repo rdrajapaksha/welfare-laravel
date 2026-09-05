@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Member;
 use App\Http\Controllers\Controller;
 use App\Models\Announcement;
 use App\Models\Event;
+use App\Models\MemberMeeting;
 use App\Support\MembershipDues;
 use Illuminate\View\View;
 
@@ -25,6 +26,7 @@ class DashboardController extends Controller
                 ->take(5)
                 ->get(),
             'nextEvent' => Event::published()->where('starts_at', '>=', now())->first(),
+            'nextMeeting' => MemberMeeting::query()->published()->upcoming()->first(),
         ]);
     }
 }

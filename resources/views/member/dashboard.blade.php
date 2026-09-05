@@ -22,6 +22,14 @@
         <a href="{{ locale_url('/dashboard/vote') }}" class="card-surface card-interactive p-5 font-bold">{{ $d['dashboard']['eVoting'] }}</a>
     @endif
 </div>
+@if ($nextMeeting)
+    <a href="{{ locale_url('/dashboard/meetings') }}" class="card-surface card-interactive mt-6 block p-5">
+        <p class="text-xs font-bold uppercase tracking-wider text-brand-700">{{ $d['dashboard']['nextMeeting'] }}</p>
+        <h2 class="mt-2 text-xl font-extrabold">{{ $nextMeeting->translate('title') }}</h2>
+        <p class="mt-2 text-sm text-ink-600">{{ $nextMeeting->held_at->format('d M Y · g:i A') }} · {{ $d['dashboard']['hostedBy'] }} {{ $nextMeeting->host_name }}</p>
+        <p class="mt-1 text-sm text-ink-600">{{ $nextMeeting->host_address }}</p>
+    </a>
+@endif
 <div class="mt-8 grid gap-6 lg:grid-cols-2">
     <div class="card-surface p-5">
         <h2 class="font-extrabold">{{ $d['dashboard']['announcements'] }}</h2>

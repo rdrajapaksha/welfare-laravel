@@ -35,6 +35,7 @@ class ProjectFactory extends Factory
             'spent_amount' => 100000,
             'beneficiaries' => 20,
             'status' => 'ONGOING',
+            'theme' => 'COMMUNITY',
             'started_at' => now()->subMonth(),
         ];
     }
